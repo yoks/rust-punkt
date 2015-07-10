@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `TrainingData` struct in crate `punkt`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, TrainingData">
+
+    <title>punkt::TrainingData - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../main.css">
+
+    
+    
+</head>
+<body class="rustdoc">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <section class="sidebar">
+        
+        <p class='location'><a href='index.html'>punkt</a></p><script>window.sidebarCurrent = {name: 'TrainingData', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+    </section>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press 'S' to search, '?' for more options..."
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content struct">
+<h1 class='fqn'><span class='in-band'>Struct <a href='index.html'>punkt</a>::<wbr><a class='struct' href=''>TrainingData</a></span><span class='out-of-band'><span id='render-detail'>
+            <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                [<span class='inner'>&#x2212;</span>]
+            </a>
+        </span><a id='src-265' class='srclink' href='../src/punkt/trainer.rs.html#68-73' title='goto source code'>[src]</a></span></h1>
+<pre class='rust struct'>pub struct TrainingData&lt;'a&gt; {
+    // some fields omitted
+}</pre><div class='docblock'><p>Stores data that was obtained during training.</p>
+
+<h1 id="examples" class='section-header'><a
+                           href="#examples">Examples</a></h1>
+<p>Precompiled data can be loaded via a language specific constructor.</p>
+<pre class='rust rust-example-rendered'>
+<span class='kw'>let</span> <span class='ident'>eng_data</span> <span class='op'>=</span> <span class='ident'>TrainingData</span>::<span class='ident'>english</span>();
+<span class='kw'>let</span> <span class='ident'>ger_data</span> <span class='op'>=</span> <span class='ident'>TrainingData</span>::<span class='ident'>german</span>();
+
+<span class='macro'>assert</span><span class='macro'>!</span>(<span class='ident'>eng_data</span>.<span class='ident'>contains_abbrev</span>(<span class='string'>&quot;va&quot;</span>));
+<span class='macro'>assert</span><span class='macro'>!</span>(<span class='ident'>ger_data</span>.<span class='ident'>contains_abbrev</span>(<span class='string'>&quot;crz&quot;</span>));
+</pre>
+</div><h2 id='methods'>Methods</h2><h3 class='impl'><code>impl&lt;'a&gt; <a class='struct' href='../punkt/struct.TrainingData.html' title='punkt::TrainingData'>TrainingData</a>&lt;'a&gt;</code></h3><div class='impl-items'><h4 id='method.new' class='method'><code>fn <a href='#method.new' class='fnname'>new</a>() -&gt; <a class='struct' href='../punkt/struct.TrainingData.html' title='punkt::TrainingData'>TrainingData</a>&lt;'a&gt;</code></h4>
+<div class='docblock'><p>Creates a new, empty data object.</p>
+</div><h4 id='method.contains_abbrev' class='method'><code>fn <a href='#method.contains_abbrev' class='fnname'>contains_abbrev</a>(&amp;self, tok: &amp;<a href='http://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>) -&gt; <a href='http://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></h4>
+<div class='docblock'><p>Check if a token is considered to be an abbreviation.</p>
+</div><h4 id='method.contains_sentence_starter' class='method'><code>fn <a href='#method.contains_sentence_starter' class='fnname'>contains_sentence_starter</a>(&amp;self, tok: &amp;<a href='http://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>) -&gt; <a href='http://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></h4>
+<div class='docblock'><p>Check if a token is considered to be a token that commonly starts a
+sentence.</p>
+</div><h4 id='method.contains_collocation' class='method'><code>fn <a href='#method.contains_collocation' class='fnname'>contains_collocation</a>(&amp;self, left: &amp;<a href='http://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>, right: &amp;<a href='http://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>) -&gt; <a href='http://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></h4>
+<div class='docblock'><p>Checks if a pair of words are commonly known to appear together.</p>
+</div><h4 id='method.get_orthographic_context' class='method'><code>fn <a href='#method.get_orthographic_context' class='fnname'>get_orthographic_context</a>(&amp;self, tok: &amp;<a href='http://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>) -&gt; <a href='http://doc.rust-lang.org/nightly/std/primitive.u8.html'>u8</a></code></h4>
+<div class='docblock'><p>Gets the orthographic context for a token. Returns 0 if the token
+was not yet encountered.</p>
+</div></div><h3 class='impl'><code>impl&lt;'a&gt; <a class='struct' href='../punkt/struct.TrainingData.html' title='punkt::TrainingData'>TrainingData</a>&lt;'a&gt;</code></h3><div class='impl-items'><h4 id='method.czech' class='method'><code>fn <a href='#method.czech' class='fnname'>czech</a>() -&gt; <a class='struct' href='../punkt/struct.TrainingData.html' title='punkt::TrainingData'>TrainingData</a>&lt;'a&gt;</code></h4>
+</div><h3 class='impl'><code>impl&lt;'a&gt; <a class='struct' href='../punkt/struct.TrainingData.html' title='punkt::TrainingData'>TrainingData</a>&lt;'a&gt;</code></h3><div class='impl-items'><h4 id='method.danish' class='method'><code>fn <a href='#method.danish' class='fnname'>danish</a>() -&gt; <a class='struct' href='../punkt/struct.TrainingData.html' title='punkt::TrainingData'>TrainingData</a>&lt;'a&gt;</code></h4>
+</div><h3 class='impl'><code>impl&lt;'a&gt; <a class='struct' href='../punkt/struct.TrainingData.html' title='punkt::TrainingData'>TrainingData</a>&lt;'a&gt;</code></h3><div class='impl-items'><h4 id='method.dutch' class='method'><code>fn <a href='#method.dutch' class='fnname'>dutch</a>() -&gt; <a class='struct' href='../punkt/struct.TrainingData.html' title='punkt::TrainingData'>TrainingData</a>&lt;'a&gt;</code></h4>
+</div><h3 class='impl'><code>impl&lt;'a&gt; <a class='struct' href='../punkt/struct.TrainingData.html' title='punkt::TrainingData'>TrainingData</a>&lt;'a&gt;</code></h3><div class='impl-items'><h4 id='method.english' class='method'><code>fn <a href='#method.english' class='fnname'>english</a>() -&gt; <a class='struct' href='../punkt/struct.TrainingData.html' title='punkt::TrainingData'>TrainingData</a>&lt;'a&gt;</code></h4>
+</div><h3 class='impl'><code>impl&lt;'a&gt; <a class='struct' href='../punkt/struct.TrainingData.html' title='punkt::TrainingData'>TrainingData</a>&lt;'a&gt;</code></h3><div class='impl-items'><h4 id='method.estonian' class='method'><code>fn <a href='#method.estonian' class='fnname'>estonian</a>() -&gt; <a class='struct' href='../punkt/struct.TrainingData.html' title='punkt::TrainingData'>TrainingData</a>&lt;'a&gt;</code></h4>
+</div><h3 class='impl'><code>impl&lt;'a&gt; <a class='struct' href='../punkt/struct.TrainingData.html' title='punkt::TrainingData'>TrainingData</a>&lt;'a&gt;</code></h3><div class='impl-items'><h4 id='method.finnish' class='method'><code>fn <a href='#method.finnish' class='fnname'>finnish</a>() -&gt; <a class='struct' href='../punkt/struct.TrainingData.html' title='punkt::TrainingData'>TrainingData</a>&lt;'a&gt;</code></h4>
+</div><h3 class='impl'><code>impl&lt;'a&gt; <a class='struct' href='../punkt/struct.TrainingData.html' title='punkt::TrainingData'>TrainingData</a>&lt;'a&gt;</code></h3><div class='impl-items'><h4 id='method.french' class='method'><code>fn <a href='#method.french' class='fnname'>french</a>() -&gt; <a class='struct' href='../punkt/struct.TrainingData.html' title='punkt::TrainingData'>TrainingData</a>&lt;'a&gt;</code></h4>
+</div><h3 class='impl'><code>impl&lt;'a&gt; <a class='struct' href='../punkt/struct.TrainingData.html' title='punkt::TrainingData'>TrainingData</a>&lt;'a&gt;</code></h3><div class='impl-items'><h4 id='method.german' class='method'><code>fn <a href='#method.german' class='fnname'>german</a>() -&gt; <a class='struct' href='../punkt/struct.TrainingData.html' title='punkt::TrainingData'>TrainingData</a>&lt;'a&gt;</code></h4>
+</div><h3 class='impl'><code>impl&lt;'a&gt; <a class='struct' href='../punkt/struct.TrainingData.html' title='punkt::TrainingData'>TrainingData</a>&lt;'a&gt;</code></h3><div class='impl-items'><h4 id='method.greek' class='method'><code>fn <a href='#method.greek' class='fnname'>greek</a>() -&gt; <a class='struct' href='../punkt/struct.TrainingData.html' title='punkt::TrainingData'>TrainingData</a>&lt;'a&gt;</code></h4>
+</div><h3 class='impl'><code>impl&lt;'a&gt; <a class='struct' href='../punkt/struct.TrainingData.html' title='punkt::TrainingData'>TrainingData</a>&lt;'a&gt;</code></h3><div class='impl-items'><h4 id='method.italian' class='method'><code>fn <a href='#method.italian' class='fnname'>italian</a>() -&gt; <a class='struct' href='../punkt/struct.TrainingData.html' title='punkt::TrainingData'>TrainingData</a>&lt;'a&gt;</code></h4>
+</div><h3 class='impl'><code>impl&lt;'a&gt; <a class='struct' href='../punkt/struct.TrainingData.html' title='punkt::TrainingData'>TrainingData</a>&lt;'a&gt;</code></h3><div class='impl-items'><h4 id='method.norwegian' class='method'><code>fn <a href='#method.norwegian' class='fnname'>norwegian</a>() -&gt; <a class='struct' href='../punkt/struct.TrainingData.html' title='punkt::TrainingData'>TrainingData</a>&lt;'a&gt;</code></h4>
+</div><h3 class='impl'><code>impl&lt;'a&gt; <a class='struct' href='../punkt/struct.TrainingData.html' title='punkt::TrainingData'>TrainingData</a>&lt;'a&gt;</code></h3><div class='impl-items'><h4 id='method.polish' class='method'><code>fn <a href='#method.polish' class='fnname'>polish</a>() -&gt; <a class='struct' href='../punkt/struct.TrainingData.html' title='punkt::TrainingData'>TrainingData</a>&lt;'a&gt;</code></h4>
+</div><h3 class='impl'><code>impl&lt;'a&gt; <a class='struct' href='../punkt/struct.TrainingData.html' title='punkt::TrainingData'>TrainingData</a>&lt;'a&gt;</code></h3><div class='impl-items'><h4 id='method.portuguese' class='method'><code>fn <a href='#method.portuguese' class='fnname'>portuguese</a>() -&gt; <a class='struct' href='../punkt/struct.TrainingData.html' title='punkt::TrainingData'>TrainingData</a>&lt;'a&gt;</code></h4>
+</div><h3 class='impl'><code>impl&lt;'a&gt; <a class='struct' href='../punkt/struct.TrainingData.html' title='punkt::TrainingData'>TrainingData</a>&lt;'a&gt;</code></h3><div class='impl-items'><h4 id='method.slovene' class='method'><code>fn <a href='#method.slovene' class='fnname'>slovene</a>() -&gt; <a class='struct' href='../punkt/struct.TrainingData.html' title='punkt::TrainingData'>TrainingData</a>&lt;'a&gt;</code></h4>
+</div><h3 class='impl'><code>impl&lt;'a&gt; <a class='struct' href='../punkt/struct.TrainingData.html' title='punkt::TrainingData'>TrainingData</a>&lt;'a&gt;</code></h3><div class='impl-items'><h4 id='method.spanish' class='method'><code>fn <a href='#method.spanish' class='fnname'>spanish</a>() -&gt; <a class='struct' href='../punkt/struct.TrainingData.html' title='punkt::TrainingData'>TrainingData</a>&lt;'a&gt;</code></h4>
+</div><h3 class='impl'><code>impl&lt;'a&gt; <a class='struct' href='../punkt/struct.TrainingData.html' title='punkt::TrainingData'>TrainingData</a>&lt;'a&gt;</code></h3><div class='impl-items'><h4 id='method.swedish' class='method'><code>fn <a href='#method.swedish' class='fnname'>swedish</a>() -&gt; <a class='struct' href='../punkt/struct.TrainingData.html' title='punkt::TrainingData'>TrainingData</a>&lt;'a&gt;</code></h4>
+</div><h3 class='impl'><code>impl&lt;'a&gt; <a class='struct' href='../punkt/struct.TrainingData.html' title='punkt::TrainingData'>TrainingData</a>&lt;'a&gt;</code></h3><div class='impl-items'><h4 id='method.turkish' class='method'><code>fn <a href='#method.turkish' class='fnname'>turkish</a>() -&gt; <a class='struct' href='../punkt/struct.TrainingData.html' title='punkt::TrainingData'>TrainingData</a>&lt;'a&gt;</code></h4>
+</div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><code>impl&lt;'a&gt; <a class='trait' href='http://doc.rust-lang.org/nightly/core/str/trait.FromStr.html' title='core::str::FromStr'>FromStr</a> for <a class='struct' href='../punkt/struct.TrainingData.html' title='punkt::TrainingData'>TrainingData</a>&lt;'a&gt;</code></h3><div class='impl-items'><h4 id='assoc_type.Err' class='type'><code>type Err = &amp;'static <a href='http://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a></code></h4>
+<h4 id='method.from_str' class='method'><code>fn <a href='http://doc.rust-lang.org/nightly/core/str/trait.FromStr.html#method.from_str' class='fnname'>from_str</a>(s: &amp;<a href='http://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>) -&gt; <a class='enum' href='http://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='struct' href='../punkt/struct.TrainingData.html' title='punkt::TrainingData'>TrainingData</a>&lt;'a&gt;, &amp;'static <a href='http://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>&gt;</code></h4>
+</div><h3 id='derived_implementations'>Derived Implementations </h3><h3 class='impl'><code>impl&lt;'a&gt; <a class='trait' href='http://doc.rust-lang.org/nightly/core/default/trait.Default.html' title='core::default::Default'>Default</a> for <a class='struct' href='../punkt/struct.TrainingData.html' title='punkt::TrainingData'>TrainingData</a>&lt;'a&gt;</code></h3><div class='impl-items'><h4 id='method.default' class='method'><code>fn <a href='http://doc.rust-lang.org/nightly/core/default/trait.Default.html#method.default' class='fnname'>default</a>() -&gt; <a class='struct' href='../punkt/struct.TrainingData.html' title='punkt::TrainingData'>TrainingData</a>&lt;'a&gt;</code></h4>
+</div><h3 class='impl'><code>impl&lt;'a&gt; <a class='trait' href='http://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html' title='core::fmt::Debug'>Debug</a> for <a class='struct' href='../punkt/struct.TrainingData.html' title='punkt::TrainingData'>TrainingData</a>&lt;'a&gt;</code></h3><div class='impl-items'><h4 id='method.fmt' class='method'><code>fn <a href='http://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#method.fmt' class='fnname'>fmt</a>(&amp;self, __arg_0: &amp;mut <a class='struct' href='http://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html' title='core::fmt::Formatter'>Formatter</a>) -&gt; <a class='type' href='http://doc.rust-lang.org/nightly/core/fmt/type.Result.html' title='core::fmt::Result'>Result</a></code></h4>
+</div></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <div id="help" class="hidden">
+        <div class="shortcuts">
+            <h1>Keyboard shortcuts</h1>
+            <dl>
+                <dt>?</dt>
+                <dd>Show this help dialog</dd>
+                <dt>S</dt>
+                <dd>Focus the search field</dd>
+                <dt>&larrb;</dt>
+                <dd>Move up in search results</dd>
+                <dt>&rarrb;</dt>
+                <dd>Move down in search results</dd>
+                <dt>&#9166;</dt>
+                <dd>Go to active search result</dd>
+            </dl>
+        </div>
+        <div class="infos">
+            <h1>Search tricks</h1>
+            <p>
+                Prefix searches with a type followed by a colon (e.g.
+                <code>fn:</code>) to restrict the search to a given type.
+            </p>
+            <p>
+                Accepted types are: <code>fn</code>, <code>mod</code>,
+                <code>struct</code>, <code>enum</code>,
+                <code>trait</code>, <code>typedef</code> (or
+                <code>tdef</code>).
+            </p>
+            <p>
+                Search functions by type signature (e.g.
+                <code>vec -> usize</code>)
+            </p>
+        </div>
+    </div>
+
+    
+
+    <script>
+        window.rootPath = "../";
+        window.currentCrate = "punkt";
+        window.playgroundUrl = "";
+    </script>
+    <script src="../jquery.js"></script>
+    <script src="../main.js"></script>
+    
+    <script async src="../search-index.js"></script>
+</body>
+</html>
