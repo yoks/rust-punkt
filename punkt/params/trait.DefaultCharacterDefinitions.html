@@ -9,6 +9,7 @@
 
     <title>punkt::params::DefaultCharacterDefinitions - Rust</title>
 
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../../main.css">
 
     
@@ -24,17 +25,17 @@
 
     
 
-    <section class="sidebar">
+    <nav class="sidebar">
         
         <p class='location'><a href='../index.html'>punkt</a>::<wbr><a href='index.html'>params</a></p><script>window.sidebarCurrent = {name: 'DefaultCharacterDefinitions', ty: 'trait', relpath: ''};</script><script defer src="sidebar-items.js"></script>
-    </section>
+    </nav>
 
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
                 <input class="search-input" name="search"
                        autocomplete="off"
-                       placeholder="Click or press 'S' to search, '?' for more options..."
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
                        type="search">
             </div>
         </form>
@@ -45,15 +46,15 @@
             <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                 [<span class='inner'>&#x2212;</span>]
             </a>
-        </span><a id='src-6252' class='srclink' href='../../src/punkt/prelude.rs.html#115' title='goto source code'>[src]</a></span></h1>
+        </span><a id='src-712' class='srclink' href='../../src/punkt/prelude.rs.html#126' title='goto source code'>[src]</a></span></h1>
 <pre class='rust trait'>pub trait DefaultCharacterDefinitions { }</pre><div class='docblock'><p>Mixin that will give the default implementations for
-<code>DefinesSentenceEndings</code>, <code>DefinesInternalPunctuation</code>, 
+<code>DefinesSentenceEndings</code>, <code>DefinesInternalPunctuation</code>,
 <code>DefinesNonWordCharacter</code>, <code>DefinesEndingPunctuation</code>,
 and <code>DefinesNonPrefixCharacters</code>.</p>
 </div>
         <h2 id='implementors'>Implementors</h2>
         <ul class='item-list' id='implementors-list'>
-    <li><code>impl <a class='trait' href='../../punkt/params/trait.DefaultCharacterDefinitions.html' title='punkt::params::DefaultCharacterDefinitions'>DefaultCharacterDefinitions</a> for <a class='struct' href='../../punkt/params/struct.Default.html' title='punkt::params::Default'>Default</a></code></li>
+    <li><code>impl <a class='trait' href='../../punkt/params/trait.DefaultCharacterDefinitions.html' title='punkt::params::DefaultCharacterDefinitions'>DefaultCharacterDefinitions</a> for <a class='struct' href='../../punkt/params/struct.Standard.html' title='punkt::params::Standard'>Standard</a></code></li>
 </ul><script type="text/javascript" async
                               src="../../implementors/punkt/params/trait.DefaultCharacterDefinitions.js">
                       </script></section>
@@ -61,40 +62,49 @@ and <code>DefinesNonPrefixCharacters</code>.</p>
 
     <section class="footer"></section>
 
-    <div id="help" class="hidden">
-        <div class="shortcuts">
-            <h1>Keyboard shortcuts</h1>
-            <dl>
-                <dt>?</dt>
-                <dd>Show this help dialog</dd>
-                <dt>S</dt>
-                <dd>Focus the search field</dd>
-                <dt>&larrb;</dt>
-                <dd>Move up in search results</dd>
-                <dt>&rarrb;</dt>
-                <dd>Move down in search results</dd>
-                <dt>&#9166;</dt>
-                <dd>Go to active search result</dd>
-            </dl>
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code>)
+                </p>
+            </div>
         </div>
-        <div class="infos">
-            <h1>Search tricks</h1>
-            <p>
-                Prefix searches with a type followed by a colon (e.g.
-                <code>fn:</code>) to restrict the search to a given type.
-            </p>
-            <p>
-                Accepted types are: <code>fn</code>, <code>mod</code>,
-                <code>struct</code>, <code>enum</code>,
-                <code>trait</code>, <code>typedef</code> (or
-                <code>tdef</code>).
-            </p>
-            <p>
-                Search functions by type signature (e.g.
-                <code>vec -> usize</code>)
-            </p>
-        </div>
-    </div>
+    </aside>
 
     
 
@@ -106,6 +116,6 @@ and <code>DefinesNonPrefixCharacters</code>.</p>
     <script src="../../jquery.js"></script>
     <script src="../../main.js"></script>
     
-    <script async src="../../search-index.js"></script>
+    <script defer src="../../search-index.js"></script>
 </body>
 </html>

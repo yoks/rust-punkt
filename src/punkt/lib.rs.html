@@ -4,11 +4,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `src\lib.rs`.">
+    <meta name="description" content="Source to the Rust file `src/lib.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>lib.rs.html -- source</title>
 
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../../main.css">
 
     
@@ -24,17 +25,17 @@
 
     
 
-    <section class="sidebar">
+    <nav class="sidebar">
         
         
-    </section>
+    </nav>
 
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
                 <input class="search-input" name="search"
                        autocomplete="off"
-                       placeholder="Click or press 'S' to search, '?' for more options..."
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
                        type="search">
             </div>
         </form>
@@ -232,41 +233,60 @@
 <span id="190">190</span>
 <span id="191">191</span>
 <span id="192">192</span>
+<span id="193">193</span>
+<span id="194">194</span>
+<span id="195">195</span>
+<span id="196">196</span>
+<span id="197">197</span>
+<span id="198">198</span>
+<span id="199">199</span>
+<span id="200">200</span>
+<span id="201">201</span>
+<span id="202">202</span>
+<span id="203">203</span>
 </pre><pre class='rust '>
+<span class='comment'>// Copyright 2016 rust-punkt developers</span>
+<span class='comment'>//</span>
+<span class='comment'>// Licensed under the Apache License, Version 2.0 &lt;LICENSE-APACHE or</span>
+<span class='comment'>// http://www.apache.org/licenses/LICENSE-2.0&gt; or the MIT license</span>
+<span class='comment'>// &lt;LICENSE-MIT or http://opensource.org/licenses/MIT&gt;, at your</span>
+<span class='comment'>// option. This file may not be copied, modified, or distributed</span>
+<span class='comment'>// except according to those terms.</span>
+
 <span class='doccomment'>//! # Overview</span>
 <span class='doccomment'>//!</span>
-<span class='doccomment'>//! Implementation of Tibor Kiss&#39; and Jan Strunk&#39;s Punkt algorithm for sentence </span>
-<span class='doccomment'>//! tokenization. Results have been compared with small and large texts that have </span>
-<span class='doccomment'>//! been tokenized using NLTK. </span>
+<span class='doccomment'>//! Implementation of Tibor Kiss&#39; and Jan Strunk&#39;s Punkt algorithm for sentence</span>
+<span class='doccomment'>//! tokenization. Results have been compared with small and large texts that have</span>
+<span class='doccomment'>//! been tokenized using NLTK.</span>
 <span class='doccomment'>//!</span>
 <span class='doccomment'>//! # Training</span>
 <span class='doccomment'>//!</span>
-<span class='doccomment'>//! Training data can be provided to a `SentenceTokenizer` for better </span>
-<span class='doccomment'>//! results. Data can be acquired manually by training with a `Trainer`, </span>
+<span class='doccomment'>//! Training data can be provided to a `SentenceTokenizer` for better</span>
+<span class='doccomment'>//! results. Data can be acquired manually by training with a `Trainer`,</span>
 <span class='doccomment'>//! or using already compiled data from NLTK (example: `TrainingData::english()`).</span>
 <span class='doccomment'>//!</span>
 <span class='doccomment'>//! # Typical Usage</span>
-<span class='doccomment'>//! </span>
-<span class='doccomment'>//! The punkt algorithm allows you to derive all the necessary data to perform </span>
-<span class='doccomment'>//! sentence tokenization from the document itself. </span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//! The punkt algorithm allows you to derive all the necessary data to perform</span>
+<span class='doccomment'>//! sentence tokenization from the document itself.</span>
 <span class='doccomment'>//!</span>
 <span class='doccomment'>//! ```</span>
-<span class='doccomment'>//! # use punkt::params::Default;</span>
+<span class='doccomment'>//! # use punkt::params::Standard;</span>
 <span class='doccomment'>//! # use punkt::{Trainer, TrainingData, SentenceTokenizer};</span>
-<span class='doccomment'>//! # </span>
+<span class='doccomment'>//! #</span>
 <span class='doccomment'>//! # let doc = &quot;I bought $5.50 worth of apples from the store. I gave them to my dog when I came home.&quot;;</span>
-<span class='doccomment'>//! let trainer: Trainer&lt;Default&gt; = Trainer::new();</span>
+<span class='doccomment'>//! let trainer: Trainer&lt;Standard&gt; = Trainer::new();</span>
 <span class='doccomment'>//! let mut data = TrainingData::new();</span>
-<span class='doccomment'>//! </span>
+<span class='doccomment'>//!</span>
 <span class='doccomment'>//! trainer.train(doc, &amp;mut data);</span>
-<span class='doccomment'>//! </span>
-<span class='doccomment'>//! for s in SentenceTokenizer::&lt;Default&gt;::new(doc, &amp;data) {</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//! for s in SentenceTokenizer::&lt;Standard&gt;::new(doc, &amp;data) {</span>
 <span class='doccomment'>//!   println!(&quot;{:?}&quot;, s);</span>
 <span class='doccomment'>//! }</span>
 <span class='doccomment'>//! ```</span>
 <span class='doccomment'>//!</span>
 <span class='doccomment'>//! `rust-punkt` also provides pretrained data that can be loaded for certain languages.</span>
-<span class='doccomment'>//! </span>
+<span class='doccomment'>//!</span>
 <span class='doccomment'>//! ```</span>
 <span class='doccomment'>//! # #![allow(unused_variables)]</span>
 <span class='doccomment'>//! #</span>
@@ -278,17 +298,17 @@
 <span class='doccomment'>//! `rust-punkt` also allows training data to be incrementally gathered.</span>
 <span class='doccomment'>//!</span>
 <span class='doccomment'>//! ```</span>
-<span class='doccomment'>//! # use punkt::params::Default;</span>
+<span class='doccomment'>//! # use punkt::params::Standard;</span>
 <span class='doccomment'>//! # use punkt::{Trainer, TrainingData, SentenceTokenizer};</span>
 <span class='doccomment'>//! #</span>
 <span class='doccomment'>//! # let docs = [&quot;This is a sentence with a abbrev. in it.&quot;];</span>
-<span class='doccomment'>//! let trainer: Trainer&lt;Default&gt; = Trainer::new();</span>
+<span class='doccomment'>//! let trainer: Trainer&lt;Standard&gt; = Trainer::new();</span>
 <span class='doccomment'>//! let mut data = TrainingData::new();</span>
-<span class='doccomment'>//! </span>
+<span class='doccomment'>//!</span>
 <span class='doccomment'>//! for d in docs.iter() {</span>
 <span class='doccomment'>//!   trainer.train(d, &amp;mut data);</span>
 <span class='doccomment'>//!</span>
-<span class='doccomment'>//!   for s in SentenceTokenizer::&lt;Default&gt;::new(d, &amp;data) {</span>
+<span class='doccomment'>//!   for s in SentenceTokenizer::&lt;Standard&gt;::new(d, &amp;data) {</span>
 <span class='doccomment'>//!     println!(&quot;{:?}&quot;, s);</span>
 <span class='doccomment'>//!   }</span>
 <span class='doccomment'>//! }</span>
@@ -296,12 +316,12 @@
 <span class='doccomment'>//!</span>
 <span class='doccomment'>//! # Customization</span>
 <span class='doccomment'>//!</span>
-<span class='doccomment'>//! `rust-punkt` exposes a number of traits to customize how the trainer, sentence tokenizer, </span>
-<span class='doccomment'>//! and internal tokenizers work. The default settings, which are nearly identical, to the </span>
-<span class='doccomment'>//! ones available in the Python library are available in `punkt::params::Default`.</span>
-<span class='doccomment'>//! </span>
+<span class='doccomment'>//! `rust-punkt` exposes a number of traits to customize how the trainer, sentence tokenizer,</span>
+<span class='doccomment'>//! and internal tokenizers work. The default settings, which are nearly identical, to the</span>
+<span class='doccomment'>//! ones available in the Python library are available in `punkt::params::Standard`.</span>
+<span class='doccomment'>//!</span>
 <span class='doccomment'>//! To modify only how the trainer works:</span>
-<span class='doccomment'>//! </span>
+<span class='doccomment'>//!</span>
 <span class='doccomment'>//! ```</span>
 <span class='doccomment'>//! # use punkt::params::{DefaultCharacterDefinitions, TrainerParameters};</span>
 <span class='doccomment'>//! #</span>
@@ -322,32 +342,32 @@
 <span class='doccomment'>//! ```</span>
 <span class='doccomment'>//!</span>
 <span class='doccomment'>//! To fully modify how everything works:</span>
-<span class='doccomment'>//! </span>
+<span class='doccomment'>//!</span>
 <span class='doccomment'>//! ```</span>
 <span class='doccomment'>//! # use punkt::params::*;</span>
 <span class='doccomment'>//! #</span>
 <span class='doccomment'>//! struct MyParams;</span>
-<span class='doccomment'>//! </span>
-<span class='doccomment'>//! impl DefinesSentenceEndings for MyParams { </span>
-<span class='doccomment'>//! # fn sentence_endings() -&gt; &amp;&#39;static Set&lt;char&gt; { Default::sentence_endings() }</span>
-<span class='doccomment'>//! }</span>
-<span class='doccomment'>//! </span>
-<span class='doccomment'>//! impl DefinesInternalPunctuation for MyParams {</span>
-<span class='doccomment'>//! # fn internal_punctuation() -&gt; &amp;&#39;static Set&lt;char&gt; { Default::sentence_endings() }</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//! impl DefinesSentenceEndings for MyParams {</span>
+<span class='doccomment'>//! # fn sentence_endings() -&gt; &amp;&#39;static Set&lt;char&gt; { Standard::sentence_endings() }</span>
 <span class='doccomment'>//! }</span>
 <span class='doccomment'>//!</span>
-<span class='doccomment'>//! impl DefinesNonWordCharacters for MyParams { </span>
-<span class='doccomment'>//! # fn nonword_chars() -&gt; &amp;&#39;static Set&lt;char&gt; { Default::nonword_chars() } </span>
+<span class='doccomment'>//! impl DefinesInternalPunctuation for MyParams {</span>
+<span class='doccomment'>//! # fn internal_punctuation() -&gt; &amp;&#39;static Set&lt;char&gt; { Standard::sentence_endings() }</span>
 <span class='doccomment'>//! }</span>
-<span class='doccomment'>//! </span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//! impl DefinesNonWordCharacters for MyParams {</span>
+<span class='doccomment'>//! # fn nonword_chars() -&gt; &amp;&#39;static Set&lt;char&gt; { Standard::nonword_chars() }</span>
+<span class='doccomment'>//! }</span>
+<span class='doccomment'>//!</span>
 <span class='doccomment'>//! impl DefinesPunctuation for MyParams {</span>
-<span class='doccomment'>//! # fn punctuation() -&gt; &amp;&#39;static Set&lt;char&gt; { Default::punctuation() }</span>
+<span class='doccomment'>//! # fn punctuation() -&gt; &amp;&#39;static Set&lt;char&gt; { Standard::punctuation() }</span>
 <span class='doccomment'>//! }</span>
 <span class='doccomment'>//!</span>
 <span class='doccomment'>//! impl DefinesNonPrefixCharacters for MyParams {</span>
-<span class='doccomment'>//! # fn nonprefix_chars() -&gt; &amp;&#39;static Set&lt;char&gt; { Default::nonprefix_chars() }</span>
+<span class='doccomment'>//! # fn nonprefix_chars() -&gt; &amp;&#39;static Set&lt;char&gt; { Standard::nonprefix_chars() }</span>
 <span class='doccomment'>//! }</span>
-<span class='doccomment'>//! </span>
+<span class='doccomment'>//!</span>
 <span class='doccomment'>//! impl TrainerParameters for MyParams {</span>
 <span class='doccomment'>//! # fn abbrev_lower_bound() -&gt; f64 { 0.3 }</span>
 <span class='doccomment'>//! # fn abbrev_upper_bound() -&gt; f64 { 8f64 }</span>
@@ -361,7 +381,7 @@
 <span class='doccomment'>//! ```</span>
 
 <span class='attribute'>#<span class='op'>!</span>[<span class='ident'>feature</span>(<span class='ident'>plugin</span>, <span class='ident'>str_char</span>)]</span>
-<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>cfg_attr</span>(<span class='ident'>test</span>, <span class='ident'>feature</span>(<span class='ident'>test</span>, <span class='ident'>path_ext</span>, <span class='ident'>fs_walk</span>))]</span>
+<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>cfg_attr</span>(<span class='ident'>test</span>, <span class='ident'>feature</span>(<span class='ident'>test</span>))]</span>
 <span class='attribute'>#<span class='op'>!</span>[<span class='ident'>plugin</span>(<span class='ident'>phf_macros</span>)]</span>
 <span class='attribute'>#<span class='op'>!</span>[<span class='ident'>warn</span>(<span class='ident'>missing_docs</span>)]</span>
 
@@ -369,7 +389,10 @@
 <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>num</span>;
 <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>rustc_serialize</span>;
 <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>freqdist</span>;
-<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>test</span>)]</span> <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>test</span>;
+<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>test</span>)]</span>
+<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>walkdir</span>;
+<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>test</span>)]</span>
+<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>test</span>;
 
 <span class='kw'>mod</span> <span class='ident'>trainer</span>;
 <span class='kw'>mod</span> <span class='ident'>util</span>;
@@ -380,36 +403,36 @@
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>trainer</span>::{<span class='ident'>Trainer</span>, <span class='ident'>TrainingData</span>};
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>tokenizer</span>::{<span class='ident'>SentenceTokenizer</span>, <span class='ident'>SentenceByteOffsetTokenizer</span>};
 
-<span class='doccomment'>/// Contains traits for configuring all tokenizers, and the trainer. Also </span>
+<span class='doccomment'>/// Contains traits for configuring all tokenizers, and the trainer. Also</span>
 <span class='doccomment'>/// contains default parameters for tokenizers, and the trainer.</span>
 <span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>params</span> {
-  <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>prelude</span>::{<span class='ident'>DefinesSentenceEndings</span>, <span class='ident'>DefinesInternalPunctuation</span>, 
-    <span class='ident'>DefinesNonWordCharacters</span>, <span class='ident'>DefinesPunctuation</span>, <span class='ident'>DefinesNonPrefixCharacters</span>,
-    <span class='ident'>TrainerParameters</span>, <span class='ident'>DefaultCharacterDefinitions</span>, <span class='ident'>Default</span>, <span class='ident'>Set</span>};
+  <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>prelude</span>::{<span class='ident'>DefinesSentenceEndings</span>, <span class='ident'>DefinesInternalPunctuation</span>, <span class='ident'>DefinesNonWordCharacters</span>,
+                    <span class='ident'>DefinesPunctuation</span>, <span class='ident'>DefinesNonPrefixCharacters</span>, <span class='ident'>TrainerParameters</span>,
+                    <span class='ident'>DefaultCharacterDefinitions</span>, <span class='ident'>Standard</span>, <span class='ident'>Set</span>};
 }
 
 
-<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>test</span>)]</span> <span class='kw'>fn</span> <span class='ident'>get_test_scenarios</span>(
-  <span class='ident'>dir_path</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>, 
-  <span class='ident'>raw_path</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>
-) <span class='op'>-&gt;</span> <span class='ident'>Vec</span><span class='op'>&lt;</span>(<span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>String</span><span class='op'>&gt;</span>, <span class='ident'>String</span>, <span class='ident'>String</span>)<span class='op'>&gt;</span> {
+<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>test</span>)]</span>
+<span class='kw'>fn</span> <span class='ident'>get_test_scenarios</span>(<span class='ident'>dir_path</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>, <span class='ident'>raw_path</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>) <span class='op'>-&gt;</span> <span class='ident'>Vec</span><span class='op'>&lt;</span>(<span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>String</span><span class='op'>&gt;</span>, <span class='ident'>String</span>, <span class='ident'>String</span>)<span class='op'>&gt;</span> {
   <span class='attribute'>#<span class='op'>!</span>[<span class='ident'>allow</span>(<span class='ident'>unused_must_use</span>)]</span>
-  
+
   <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>fs</span>;
-  <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>fs</span>::<span class='ident'>PathExt</span>;
   <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>path</span>::<span class='ident'>Path</span>;
   <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>io</span>::<span class='ident'>Read</span>;
 
+  <span class='kw'>use</span> <span class='ident'>walkdir</span>::<span class='ident'>WalkDir</span>;
+
   <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>tests</span> <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>new</span>();
 
-  <span class='kw'>for</span> <span class='ident'>path</span> <span class='kw'>in</span> <span class='ident'>fs</span>::<span class='ident'>walk_dir</span>(<span class='kw-2'>&amp;</span><span class='ident'>Path</span>::<span class='ident'>new</span>(<span class='ident'>dir_path</span>)).<span class='ident'>unwrap</span>() {
-    <span class='kw'>let</span> <span class='ident'>fpath</span> <span class='op'>=</span> <span class='ident'>path</span>.<span class='ident'>unwrap</span>().<span class='ident'>path</span>();
+  <span class='kw'>for</span> <span class='ident'>path</span> <span class='kw'>in</span> <span class='ident'>WalkDir</span>::<span class='ident'>new</span>(<span class='ident'>dir_path</span>) {
+    <span class='kw'>let</span> <span class='ident'>entry</span> <span class='op'>=</span> <span class='ident'>path</span>.<span class='ident'>unwrap</span>();
+    <span class='kw'>let</span> <span class='ident'>fpath</span> <span class='op'>=</span> <span class='ident'>entry</span>.<span class='ident'>path</span>();
 
     <span class='kw'>if</span> <span class='ident'>fpath</span>.<span class='ident'>is_file</span>() {
       <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>exp_strb</span> <span class='op'>=</span> <span class='ident'>String</span>::<span class='ident'>new</span>();
       <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>raw_strb</span> <span class='op'>=</span> <span class='ident'>String</span>::<span class='ident'>new</span>();
 
-      <span class='comment'>// Files in the directory with raw articles must match the file names of </span>
+      <span class='comment'>// Files in the directory with raw articles must match the file names of</span>
       <span class='comment'>// articles in the directory with test outcomes.</span>
       <span class='kw'>let</span> <span class='ident'>rawp</span> <span class='op'>=</span> <span class='ident'>Path</span>::<span class='ident'>new</span>(<span class='ident'>raw_path</span>).<span class='ident'>join</span>(<span class='ident'>fpath</span>.<span class='ident'>file_name</span>().<span class='ident'>unwrap</span>());
 
@@ -431,40 +454,49 @@
 
     <section class="footer"></section>
 
-    <div id="help" class="hidden">
-        <div class="shortcuts">
-            <h1>Keyboard shortcuts</h1>
-            <dl>
-                <dt>?</dt>
-                <dd>Show this help dialog</dd>
-                <dt>S</dt>
-                <dd>Focus the search field</dd>
-                <dt>&larrb;</dt>
-                <dd>Move up in search results</dd>
-                <dt>&rarrb;</dt>
-                <dd>Move down in search results</dd>
-                <dt>&#9166;</dt>
-                <dd>Go to active search result</dd>
-            </dl>
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code>)
+                </p>
+            </div>
         </div>
-        <div class="infos">
-            <h1>Search tricks</h1>
-            <p>
-                Prefix searches with a type followed by a colon (e.g.
-                <code>fn:</code>) to restrict the search to a given type.
-            </p>
-            <p>
-                Accepted types are: <code>fn</code>, <code>mod</code>,
-                <code>struct</code>, <code>enum</code>,
-                <code>trait</code>, <code>typedef</code> (or
-                <code>tdef</code>).
-            </p>
-            <p>
-                Search functions by type signature (e.g.
-                <code>vec -> usize</code>)
-            </p>
-        </div>
-    </div>
+    </aside>
 
     
 
@@ -476,6 +508,6 @@
     <script src="../../jquery.js"></script>
     <script src="../../main.js"></script>
     
-    <script async src="../../search-index.js"></script>
+    <script defer src="../../search-index.js"></script>
 </body>
 </html>

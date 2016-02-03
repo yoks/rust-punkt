@@ -4,11 +4,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `src\tokenizer.rs`.">
+    <meta name="description" content="Source to the Rust file `src/tokenizer.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>tokenizer.rs.html -- source</title>
 
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../../main.css">
 
     
@@ -24,17 +25,17 @@
 
     
 
-    <section class="sidebar">
+    <nav class="sidebar">
         
         
-    </section>
+    </nav>
 
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
                 <input class="search-input" name="search"
                        autocomplete="off"
-                       placeholder="Click or press 'S' to search, '?' for more options..."
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
                        type="search">
             </div>
         </form>
@@ -805,14 +806,21 @@
 <span id="763">763</span>
 <span id="764">764</span>
 <span id="765">765</span>
-<span id="766">766</span>
 </pre><pre class='rust '>
+<span class='comment'>// Copyright 2016 rust-punkt developers</span>
+<span class='comment'>//</span>
+<span class='comment'>// Licensed under the Apache License, Version 2.0 &lt;LICENSE-APACHE or</span>
+<span class='comment'>// http://www.apache.org/licenses/LICENSE-2.0&gt; or the MIT license</span>
+<span class='comment'>// &lt;LICENSE-MIT or http://opensource.org/licenses/MIT&gt;, at your</span>
+<span class='comment'>// option. This file may not be copied, modified, or distributed</span>
+<span class='comment'>// except according to those terms.</span>
+
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>marker</span>::<span class='ident'>PhantomData</span>;
 
 <span class='kw'>use</span> <span class='ident'>token</span>::<span class='ident'>Token</span>;
 <span class='kw'>use</span> <span class='ident'>trainer</span>::<span class='ident'>TrainingData</span>;
-<span class='kw'>use</span> <span class='ident'>prelude</span>::{<span class='ident'>DefinesSentenceEndings</span>, <span class='ident'>DefinesNonWordCharacters</span>, 
-  <span class='ident'>DefinesNonPrefixCharacters</span>, <span class='ident'>DefinesPunctuation</span>};
+<span class='kw'>use</span> <span class='ident'>prelude</span>::{<span class='ident'>DefinesSentenceEndings</span>, <span class='ident'>DefinesNonWordCharacters</span>, <span class='ident'>DefinesNonPrefixCharacters</span>,
+              <span class='ident'>DefinesPunctuation</span>};
 
 
 <span class='kw'>const</span> <span class='ident'>STATE_SENT_END</span>: <span class='ident'>u8</span> <span class='op'>=</span> <span class='number'>0b00000001</span>; <span class='comment'>// Hit a sentence end state.</span>
@@ -825,17 +833,17 @@
 <span class='kw'>struct</span> <span class='ident'>PeriodContextTokenizer</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>P</span><span class='op'>&gt;</span> {
   <span class='ident'>doc</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>str</span>,
   <span class='ident'>pos</span>: <span class='ident'>usize</span>,
-  <span class='ident'>params</span>: <span class='ident'>PhantomData</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span>
+  <span class='ident'>params</span>: <span class='ident'>PhantomData</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span>,
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>P</span><span class='op'>&gt;</span> <span class='ident'>PeriodContextTokenizer</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>P</span><span class='op'>&gt;</span> 
-  <span class='kw'>where</span> <span class='ident'>P</span> : <span class='ident'>DefinesNonWordCharacters</span> <span class='op'>+</span> <span class='ident'>DefinesSentenceEndings</span> 
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>P</span><span class='op'>&gt;</span> <span class='ident'>PeriodContextTokenizer</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>P</span><span class='op'>&gt;</span> <span class='kw'>where</span> <span class='ident'>P</span>: <span class='ident'>DefinesNonWordCharacters</span> <span class='op'>+</span> <span class='ident'>DefinesSentenceEndings</span>
 {
-  <span class='attribute'>#[<span class='ident'>inline</span>(<span class='ident'>always</span>)]</span> <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>(<span class='ident'>doc</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>str</span>) <span class='op'>-&gt;</span> <span class='ident'>PeriodContextTokenizer</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>P</span><span class='op'>&gt;</span> {
+  <span class='attribute'>#[<span class='ident'>inline</span>(<span class='ident'>always</span>)]</span>
+  <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>(<span class='ident'>doc</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>str</span>) <span class='op'>-&gt;</span> <span class='ident'>PeriodContextTokenizer</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>P</span><span class='op'>&gt;</span> {
     <span class='ident'>PeriodContextTokenizer</span> {
       <span class='ident'>doc</span>: <span class='ident'>doc</span>,
       <span class='ident'>pos</span>: <span class='number'>0</span>,
-      <span class='ident'>params</span>: <span class='ident'>PhantomData</span>
+      <span class='ident'>params</span>: <span class='ident'>PhantomData</span>,
     }
   }
 
@@ -858,9 +866,11 @@
         <span class='ident'>c</span> <span class='kw'>if</span> <span class='ident'>P</span>::<span class='ident'>is_sentence_ending</span>(<span class='kw-2'>&amp;</span><span class='ident'>c</span>) <span class='op'>=&gt;</span> {
           <span class='kw'>let</span> <span class='ident'>nxt</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>doc</span>.<span class='ident'>char_at</span>(<span class='ident'>pos</span> <span class='op'>+</span> <span class='ident'>cur</span>.<span class='ident'>len_utf8</span>());
 
-          <span class='kw'>if</span> <span class='ident'>nxt</span>.<span class='ident'>is_whitespace</span>() <span class='op'>||</span> <span class='ident'>P</span>::<span class='ident'>is_nonword_char</span>(<span class='kw-2'>&amp;</span><span class='ident'>nxt</span>) { <span class='kw'>break</span>; }
+          <span class='kw'>if</span> <span class='ident'>nxt</span>.<span class='ident'>is_whitespace</span>() <span class='op'>||</span> <span class='ident'>P</span>::<span class='ident'>is_nonword_char</span>(<span class='kw-2'>&amp;</span><span class='ident'>nxt</span>) {
+            <span class='kw'>break</span>;
+          }
         }
-        _ <span class='op'>=&gt;</span> ()
+        _ <span class='op'>=&gt;</span> (),
       }
 
       <span class='ident'>pos</span> <span class='op'>+=</span> <span class='ident'>cur</span>.<span class='ident'>len_utf8</span>();
@@ -870,8 +880,8 @@
   }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>P</span><span class='op'>&gt;</span> <span class='ident'>Iterator</span> <span class='kw'>for</span> <span class='ident'>PeriodContextTokenizer</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>P</span><span class='op'>&gt;</span> 
-  <span class='kw'>where</span> <span class='ident'>P</span> : <span class='ident'>DefinesNonWordCharacters</span> <span class='op'>+</span> <span class='ident'>DefinesSentenceEndings</span>
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>P</span><span class='op'>&gt;</span> <span class='ident'>Iterator</span> <span class='kw'>for</span> <span class='ident'>PeriodContextTokenizer</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>P</span><span class='op'>&gt;</span>
+  <span class='kw'>where</span> <span class='ident'>P</span>: <span class='ident'>DefinesNonWordCharacters</span> <span class='op'>+</span> <span class='ident'>DefinesSentenceEndings</span>
 {
   <span class='comment'>// (Entire slice of section, beginning of next break (if there is one),</span>
   <span class='comment'>// start of whitespace before next token, end of entire slice,</span>
@@ -892,7 +902,7 @@
           {
             <span class='kw'>let</span> <span class='ident'>end</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>pos</span>;
 
-            <span class='comment'>// Return to the start of a any next token that occured </span>
+            <span class='comment'>// Return to the start of a any next token that occured</span>
             <span class='comment'>// with a sentence ending.</span>
             <span class='kw'>if</span> <span class='ident'>state</span> <span class='kw-2'>&amp;</span> <span class='ident'>STATE_UPDT_RET</span> <span class='op'>!=</span> <span class='number'>0</span> { <span class='self'>self</span>.<span class='ident'>pos</span> <span class='op'>=</span> <span class='ident'>nstart</span>; }
 
@@ -909,7 +919,7 @@
       <span class='kw'>match</span> <span class='ident'>cur</span> {
         <span class='comment'>// A sentence ending was encountered. Set the appropriate state.</span>
         <span class='comment'>// This is done anytime a sentence ender is encountered. It should not</span>
-        <span class='comment'>// affect capturing. </span>
+        <span class='comment'>// affect capturing.</span>
         <span class='ident'>c</span> <span class='kw'>if</span> <span class='ident'>P</span>::<span class='ident'>is_sentence_ending</span>(<span class='kw-2'>&amp;</span><span class='ident'>c</span>) <span class='op'>=&gt;</span> {
           <span class='ident'>state</span> <span class='op'>|=</span> <span class='ident'>STATE_SENT_END</span>;
 
@@ -920,13 +930,15 @@
             <span class='ident'>state</span> <span class='op'>^=</span> <span class='ident'>STATE_UPDT_STT</span>;
           }
 
-          <span class='comment'>// Capturing a token, and a sentence ending token is encountered. </span>
+          <span class='comment'>// Capturing a token, and a sentence ending token is encountered.</span>
           <span class='comment'>// Flag this token to be revisited.</span>
-          <span class='kw'>if</span> <span class='ident'>state</span> <span class='kw-2'>&amp;</span> <span class='ident'>STATE_CAPT_TOK</span> <span class='op'>!=</span> <span class='number'>0</span> { <span class='ident'>state</span> <span class='op'>|=</span> <span class='ident'>STATE_UPDT_RET</span>; }
+          <span class='kw'>if</span> <span class='ident'>state</span> <span class='kw-2'>&amp;</span> <span class='ident'>STATE_CAPT_TOK</span> <span class='op'>!=</span> <span class='number'>0</span> {
+            <span class='ident'>state</span> <span class='op'>|=</span> <span class='ident'>STATE_UPDT_RET</span>;
+          }
         }
-        <span class='comment'>// A sentence ending has not yet been countered. If a whitespace is </span>
-        <span class='comment'>// encountered, the start of the token needs to be updated. Set a flag </span>
-        <span class='comment'>// to state this fact. If a non-whitespace is encountered, and the start </span>
+        <span class='comment'>// A sentence ending has not yet been countered. If a whitespace is</span>
+        <span class='comment'>// encountered, the start of the token needs to be updated. Set a flag</span>
+        <span class='comment'>// to state this fact. If a non-whitespace is encountered, and the start</span>
         <span class='comment'>// needs to be updated, then actually update the start position.</span>
         <span class='ident'>c</span> <span class='kw'>if</span> <span class='ident'>state</span> <span class='kw-2'>&amp;</span> <span class='ident'>STATE_SENT_END</span> <span class='op'>==</span> <span class='number'>0</span> <span class='op'>=&gt;</span> {
           <span class='kw'>if</span> <span class='ident'>c</span>.<span class='ident'>is_whitespace</span>() {
@@ -939,10 +951,8 @@
         <span class='comment'>// Hit a sentence end character already, but not yet at token begin.</span>
         <span class='comment'>// If whitespace is hit, then capturing of token can begin.</span>
         <span class='comment'>// If a non-word token is hit, then return.</span>
-        <span class='comment'>// Otherwise, no match was made, continue. </span>
-        <span class='ident'>c</span> <span class='kw'>if</span> <span class='ident'>state</span> <span class='kw-2'>&amp;</span> <span class='ident'>STATE_SENT_END</span> <span class='op'>!=</span> <span class='number'>0</span> <span class='op'>&amp;&amp;</span> 
-             <span class='ident'>state</span> <span class='kw-2'>&amp;</span> <span class='ident'>STATE_TOKN_BEG</span> <span class='op'>==</span> <span class='number'>0</span> <span class='op'>=&gt;</span> 
-        {
+        <span class='comment'>// Otherwise, no match was made, continue.</span>
+        <span class='ident'>c</span> <span class='kw'>if</span> <span class='ident'>state</span> <span class='kw-2'>&amp;</span> <span class='ident'>STATE_SENT_END</span> <span class='op'>!=</span> <span class='number'>0</span> <span class='op'>&amp;&amp;</span> <span class='ident'>state</span> <span class='kw-2'>&amp;</span> <span class='ident'>STATE_TOKN_BEG</span> <span class='op'>==</span> <span class='number'>0</span> <span class='op'>=&gt;</span> {
           <span class='kw'>if</span> <span class='ident'>c</span>.<span class='ident'>is_whitespace</span>() {
             <span class='ident'>state</span> <span class='op'>|=</span> <span class='ident'>STATE_TOKN_BEG</span>;
             <span class='ident'>wstart</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>pos</span>;
@@ -952,29 +962,25 @@
 
             <span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>lookahead_is_token</span>() {
               <span class='prelude-val'>Some</span>(<span class='ident'>x</span>) <span class='op'>=&gt;</span> <span class='self'>self</span>.<span class='ident'>pos</span> <span class='op'>=</span> <span class='ident'>x</span>,
-              <span class='prelude-val'>None</span> <span class='op'>=&gt;</span> <span class='macro'>return_token</span><span class='macro'>!</span>() 
+              <span class='prelude-val'>None</span> <span class='op'>=&gt;</span> <span class='macro'>return_token</span><span class='macro'>!</span>(),
             }
-          } <span class='kw'>else</span> <span class='kw'>if</span> <span class='op'>!</span><span class='ident'>P</span>::<span class='ident'>is_sentence_ending</span>(<span class='kw-2'>&amp;</span><span class='ident'>c</span>) { 
+          } <span class='kw'>else</span> <span class='kw'>if</span> <span class='op'>!</span><span class='ident'>P</span>::<span class='ident'>is_sentence_ending</span>(<span class='kw-2'>&amp;</span><span class='ident'>c</span>) {
             <span class='ident'>state</span> <span class='op'>^=</span> <span class='ident'>STATE_SENT_END</span>;
           }
         }
         <span class='comment'>// Capturing the whitespace before a token, and a non-whitespace</span>
         <span class='comment'>// is encountered. Start capturing that token.</span>
-        <span class='ident'>c</span> <span class='kw'>if</span> <span class='ident'>state</span> <span class='kw-2'>&amp;</span> <span class='ident'>STATE_SENT_END</span> <span class='op'>!=</span> <span class='number'>0</span> <span class='op'>&amp;&amp;</span>
-             <span class='ident'>state</span> <span class='kw-2'>&amp;</span> <span class='ident'>STATE_TOKN_BEG</span> <span class='op'>!=</span> <span class='number'>0</span> <span class='op'>&amp;&amp;</span> 
-             <span class='ident'>state</span> <span class='kw-2'>&amp;</span> <span class='ident'>STATE_CAPT_TOK</span> <span class='op'>==</span> <span class='number'>0</span> <span class='op'>=&gt;</span>
-        {
+        <span class='ident'>c</span> <span class='kw'>if</span> <span class='ident'>state</span> <span class='kw-2'>&amp;</span> <span class='ident'>STATE_SENT_END</span> <span class='op'>!=</span> <span class='number'>0</span> <span class='op'>&amp;&amp;</span> <span class='ident'>state</span> <span class='kw-2'>&amp;</span> <span class='ident'>STATE_TOKN_BEG</span> <span class='op'>!=</span> <span class='number'>0</span> <span class='op'>&amp;&amp;</span>
+             <span class='ident'>state</span> <span class='kw-2'>&amp;</span> <span class='ident'>STATE_CAPT_TOK</span> <span class='op'>==</span> <span class='number'>0</span> <span class='op'>=&gt;</span> {
           <span class='kw'>if</span> <span class='op'>!</span><span class='ident'>c</span>.<span class='ident'>is_whitespace</span>() {
             <span class='ident'>nstart</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>pos</span>;
-            <span class='ident'>state</span> <span class='op'>|=</span> <span class='ident'>STATE_CAPT_TOK</span>;         
+            <span class='ident'>state</span> <span class='op'>|=</span> <span class='ident'>STATE_CAPT_TOK</span>;
           }
         }
         <span class='comment'>// Whitespace after a token has been encountered. Final state -- return.</span>
-        <span class='ident'>c</span> <span class='kw'>if</span> <span class='ident'>state</span> <span class='kw-2'>&amp;</span> <span class='ident'>STATE_CAPT_TOK</span> <span class='op'>!=</span> <span class='number'>0</span> <span class='op'>&amp;&amp;</span> <span class='ident'>c</span>.<span class='ident'>is_whitespace</span>() <span class='op'>=&gt;</span> {
-          <span class='macro'>return_token</span><span class='macro'>!</span>()
-        }
+        <span class='ident'>c</span> <span class='kw'>if</span> <span class='ident'>state</span> <span class='kw-2'>&amp;</span> <span class='ident'>STATE_CAPT_TOK</span> <span class='op'>!=</span> <span class='number'>0</span> <span class='op'>&amp;&amp;</span> <span class='ident'>c</span>.<span class='ident'>is_whitespace</span>() <span class='op'>=&gt;</span> <span class='macro'>return_token</span><span class='macro'>!</span>(),
         <span class='comment'>// Skip if not in a state at all.</span>
-        _ <span class='op'>=&gt;</span> ()
+        _ <span class='op'>=&gt;</span> (),
       }
 
       <span class='self'>self</span>.<span class='ident'>pos</span> <span class='op'>+=</span> <span class='ident'>cur</span>.<span class='ident'>len_utf8</span>();
@@ -994,28 +1000,32 @@
 <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>WordTokenizer</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>P</span><span class='op'>&gt;</span> {
   <span class='ident'>pos</span>: <span class='ident'>usize</span>,
   <span class='ident'>doc</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>str</span>,
-  <span class='ident'>params</span>: <span class='ident'>PhantomData</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span>
+  <span class='ident'>params</span>: <span class='ident'>PhantomData</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span>,
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>P</span><span class='op'>&gt;</span> <span class='ident'>WordTokenizer</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>P</span><span class='op'>&gt;</span> 
-  <span class='kw'>where</span> <span class='ident'>P</span> : <span class='ident'>DefinesNonPrefixCharacters</span> <span class='op'>+</span> <span class='ident'>DefinesNonWordCharacters</span> 
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>P</span><span class='op'>&gt;</span> <span class='ident'>WordTokenizer</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>P</span><span class='op'>&gt;</span> <span class='kw'>where</span> <span class='ident'>P</span>: <span class='ident'>DefinesNonPrefixCharacters</span> <span class='op'>+</span> <span class='ident'>DefinesNonWordCharacters</span>
 {
-  <span class='attribute'>#[<span class='ident'>inline</span>(<span class='ident'>always</span>)]</span> <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>(<span class='ident'>doc</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>str</span>) <span class='op'>-&gt;</span> <span class='ident'>WordTokenizer</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>P</span><span class='op'>&gt;</span> {
+  <span class='attribute'>#[<span class='ident'>inline</span>(<span class='ident'>always</span>)]</span>
+  <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>(<span class='ident'>doc</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>str</span>) <span class='op'>-&gt;</span> <span class='ident'>WordTokenizer</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>P</span><span class='op'>&gt;</span> {
     <span class='ident'>WordTokenizer</span> {
       <span class='ident'>pos</span>: <span class='number'>0</span>,
       <span class='ident'>doc</span>: <span class='ident'>doc</span>,
-      <span class='ident'>params</span>: <span class='ident'>PhantomData</span>
+      <span class='ident'>params</span>: <span class='ident'>PhantomData</span>,
     }
   }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>P</span><span class='op'>&gt;</span> <span class='ident'>Iterator</span> <span class='kw'>for</span> <span class='ident'>WordTokenizer</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>P</span><span class='op'>&gt;</span> 
-  <span class='kw'>where</span> <span class='ident'>P</span> : <span class='ident'>DefinesNonPrefixCharacters</span> <span class='op'>+</span> <span class='ident'>DefinesNonWordCharacters</span> 
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>P</span><span class='op'>&gt;</span> <span class='ident'>Iterator</span> <span class='kw'>for</span> <span class='ident'>WordTokenizer</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>P</span><span class='op'>&gt;</span>
+  <span class='kw'>where</span> <span class='ident'>P</span>: <span class='ident'>DefinesNonPrefixCharacters</span> <span class='op'>+</span> <span class='ident'>DefinesNonWordCharacters</span>
 {
   <span class='kw'>type</span> <span class='ident'>Item</span> <span class='op'>=</span> <span class='ident'>Token</span>;
 
   <span class='kw'>fn</span> <span class='ident'>next</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>Token</span><span class='op'>&gt;</span> {
-    <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>state</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>pos</span> <span class='op'>==</span> <span class='number'>0</span> { <span class='ident'>NEWLINE_START</span> } <span class='kw'>else</span> { <span class='number'>0u8</span> };
+    <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>state</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>pos</span> <span class='op'>==</span> <span class='number'>0</span> {
+      <span class='ident'>NEWLINE_START</span>
+    } <span class='kw'>else</span> {
+      <span class='number'>0u8</span>
+    };
     <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>start</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>pos</span>;
     <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>is_ellipsis</span> <span class='op'>=</span> <span class='boolval'>false</span>;
 
@@ -1023,7 +1033,7 @@
     <span class='macro'>macro_rules</span><span class='macro'>!</span> <span class='ident'>return_token</span>(
       () <span class='op'>=&gt;</span> (
         {
-          <span class='comment'>// Rollback if the reason the capture was ended was because </span>
+          <span class='comment'>// Rollback if the reason the capture was ended was because</span>
           <span class='comment'>// of a comma.</span>
           <span class='kw'>if</span> <span class='ident'>state</span> <span class='kw-2'>&amp;</span> <span class='ident'>CAPTURE_COMMA</span> <span class='op'>!=</span> <span class='number'>0</span> {
             <span class='self'>self</span>.<span class='ident'>pos</span> <span class='op'>-=</span> <span class='number'>1</span>;
@@ -1031,7 +1041,7 @@
 
           <span class='kw'>return</span> <span class='prelude-val'>Some</span>(<span class='ident'>Token</span>::<span class='ident'>new</span>(
             <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>doc</span>[<span class='ident'>start</span>..<span class='self'>self</span>.<span class='ident'>pos</span>],
-            <span class='ident'>is_ellipsis</span>, 
+            <span class='ident'>is_ellipsis</span>,
             <span class='ident'>state</span> <span class='kw-2'>&amp;</span> <span class='ident'>PARAGPH_START</span> <span class='op'>!=</span> <span class='number'>0</span>,
             <span class='ident'>state</span> <span class='kw-2'>&amp;</span> <span class='ident'>NEWLINE_START</span> <span class='op'>!=</span> <span class='number'>0</span>));
         }
@@ -1042,35 +1052,33 @@
       <span class='kw'>let</span> <span class='ident'>cur</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>doc</span>.<span class='ident'>char_at</span>(<span class='self'>self</span>.<span class='ident'>pos</span>);
 
       <span class='comment'>// Periods or dashes are the start of multi-chars. A multi-char</span>
-      <span class='comment'>// is defined as an ellipsis or hyphen (multiple-dashes). If there </span>
+      <span class='comment'>// is defined as an ellipsis or hyphen (multiple-dashes). If there</span>
       <span class='comment'>// is a multi-character starting from the current character, return.</span>
       <span class='comment'>// Otherwise, continue.</span>
       <span class='kw'>match</span> <span class='ident'>cur</span> {
-        <span class='comment'>// Both potential multi-char starts. Check for a multi-char. If </span>
+        <span class='comment'>// Both potential multi-char starts. Check for a multi-char. If</span>
         <span class='comment'>// one exists return it, and modify `self.pos`. Otherwise, continue.</span>
         <span class='comment'>// If a capture has begin, or a comma was encountered, return the token</span>
-        <span class='comment'>// before this multi-char. </span>
+        <span class='comment'>// before this multi-char.</span>
         <span class='string'>&#39;.&#39;</span> <span class='op'>|</span> <span class='string'>&#39;-&#39;</span> <span class='op'>=&gt;</span> {
           <span class='kw'>match</span> <span class='ident'>is_multi_char</span>(<span class='self'>self</span>.<span class='ident'>doc</span>, <span class='self'>self</span>.<span class='ident'>pos</span>) {
             <span class='prelude-val'>Some</span>(<span class='ident'>s</span>) <span class='op'>=&gt;</span> {
-              <span class='kw'>if</span> <span class='ident'>state</span> <span class='kw-2'>&amp;</span> <span class='ident'>CAPTURE_START</span> <span class='op'>!=</span> <span class='number'>0</span> <span class='op'>||</span> 
-                 <span class='ident'>state</span> <span class='kw-2'>&amp;</span> <span class='ident'>CAPTURE_COMMA</span> <span class='op'>!=</span> <span class='number'>0</span> 
-              {
+              <span class='kw'>if</span> <span class='ident'>state</span> <span class='kw-2'>&amp;</span> <span class='ident'>CAPTURE_START</span> <span class='op'>!=</span> <span class='number'>0</span> <span class='op'>||</span> <span class='ident'>state</span> <span class='kw-2'>&amp;</span> <span class='ident'>CAPTURE_COMMA</span> <span class='op'>!=</span> <span class='number'>0</span> {
                 <span class='macro'>return_token</span><span class='macro'>!</span>()
               }
 
               <span class='ident'>start</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>pos</span>;
               <span class='ident'>is_ellipsis</span> <span class='op'>=</span> <span class='ident'>s</span>.<span class='ident'>ends_with</span>(<span class='string'>&quot;.&quot;</span>);
-              
+
               <span class='self'>self</span>.<span class='ident'>pos</span> <span class='op'>+=</span> <span class='ident'>s</span>.<span class='ident'>len</span>();
 
               <span class='macro'>return_token</span><span class='macro'>!</span>()
             }
-            <span class='prelude-val'>None</span> <span class='op'>=&gt;</span> ()
+            <span class='prelude-val'>None</span> <span class='op'>=&gt;</span> (),
           }
         }
         <span class='comment'>// Not a potential multi-char start, continue...</span>
-        _ <span class='op'>=&gt;</span> ()
+        _ <span class='op'>=&gt;</span> (),
       }
 
       <span class='kw'>match</span> <span class='ident'>cur</span> {
@@ -1079,32 +1087,31 @@
         <span class='ident'>c</span> <span class='kw'>if</span> <span class='ident'>state</span> <span class='kw-2'>&amp;</span> <span class='ident'>CAPTURE_START</span> <span class='op'>!=</span> <span class='number'>0</span> <span class='op'>=&gt;</span> {
           <span class='kw'>match</span> <span class='ident'>c</span> {
             <span class='comment'>// Found some whitespace, a non-word. Return the token.</span>
-            _ <span class='kw'>if</span> <span class='ident'>c</span>.<span class='ident'>is_whitespace</span>() <span class='op'>||</span> <span class='ident'>P</span>::<span class='ident'>is_nonword_char</span>(<span class='kw-2'>&amp;</span><span class='ident'>c</span>) <span class='op'>=&gt;</span> {
-              <span class='macro'>return_token</span><span class='macro'>!</span>()
-            }
-            <span class='comment'>// Valid tokens. If a comma was encountered, reset `CAPTURE_COMMA`, as the comma </span>
+            _ <span class='kw'>if</span> <span class='ident'>c</span>.<span class='ident'>is_whitespace</span>() <span class='op'>||</span> <span class='ident'>P</span>::<span class='ident'>is_nonword_char</span>(<span class='kw-2'>&amp;</span><span class='ident'>c</span>) <span class='op'>=&gt;</span> <span class='macro'>return_token</span><span class='macro'>!</span>(),
+            <span class='comment'>// Valid tokens. If a comma was encountered, reset `CAPTURE_COMMA`, as the comma</span>
             <span class='comment'>// does not signify the ending of the token.</span>
             _ <span class='kw'>if</span> <span class='ident'>c</span>.<span class='ident'>is_alphanumeric</span>() <span class='op'>=&gt;</span> {
-              <span class='kw'>if</span> <span class='ident'>state</span> <span class='kw-2'>&amp;</span> <span class='ident'>CAPTURE_COMMA</span> <span class='op'>!=</span> <span class='number'>0</span> { <span class='ident'>state</span> <span class='op'>^=</span> <span class='ident'>CAPTURE_COMMA</span>; }
+              <span class='kw'>if</span> <span class='ident'>state</span> <span class='kw-2'>&amp;</span> <span class='ident'>CAPTURE_COMMA</span> <span class='op'>!=</span> <span class='number'>0</span> {
+                <span class='ident'>state</span> <span class='op'>^=</span> <span class='ident'>CAPTURE_COMMA</span>;
+              }
             }
-            <span class='comment'>// A comma was found. Set the flag noting that a comma was found. </span>
-            <span class='comment'>// Do NOT capture past the comma. Simply skip. </span>
+            <span class='comment'>// A comma was found. Set the flag noting that a comma was found.</span>
+            <span class='comment'>// Do NOT capture past the comma. Simply skip.</span>
             <span class='string'>&#39;,&#39;</span> <span class='op'>=&gt;</span> {
               <span class='ident'>state</span> <span class='op'>|=</span> <span class='ident'>CAPTURE_COMMA</span>;
             }
-            <span class='comment'>// A valid token was encountered. Reset `CAPTURE_COMMA` to false, </span>
+            <span class='comment'>// A valid token was encountered. Reset `CAPTURE_COMMA` to false,</span>
             <span class='comment'>// as the comma does not signal the end of the token.</span>
             _ <span class='op'>=&gt;</span> {
-              <span class='kw'>if</span> <span class='ident'>state</span> <span class='kw-2'>&amp;</span> <span class='ident'>CAPTURE_COMMA</span> <span class='op'>!=</span> <span class='number'>0</span> { <span class='ident'>state</span> <span class='op'>^=</span> <span class='ident'>CAPTURE_COMMA</span>; }
+              <span class='kw'>if</span> <span class='ident'>state</span> <span class='kw-2'>&amp;</span> <span class='ident'>CAPTURE_COMMA</span> <span class='op'>!=</span> <span class='number'>0</span> {
+                <span class='ident'>state</span> <span class='op'>^=</span> <span class='ident'>CAPTURE_COMMA</span>;
+              }
             }
           }
         }
-        <span class='comment'>// A valid prefix was found, and capturing has not yet begun. </span>
+        <span class='comment'>// A valid prefix was found, and capturing has not yet begun.</span>
         <span class='comment'>// Capturing can begin!</span>
-        <span class='ident'>c</span> <span class='kw'>if</span> <span class='ident'>state</span> <span class='kw-2'>&amp;</span> <span class='ident'>CAPTURE_START</span> <span class='op'>==</span> <span class='number'>0</span> <span class='op'>&amp;&amp;</span>
-             <span class='op'>!</span><span class='ident'>c</span>.<span class='ident'>is_whitespace</span>() <span class='op'>&amp;&amp;</span>
-             <span class='op'>!</span><span class='ident'>P</span>::<span class='ident'>is_nonprefix_char</span>(<span class='kw-2'>&amp;</span><span class='ident'>c</span>) <span class='op'>=&gt;</span> 
-        {
+        <span class='ident'>c</span> <span class='kw'>if</span> <span class='ident'>state</span> <span class='kw-2'>&amp;</span> <span class='ident'>CAPTURE_START</span> <span class='op'>==</span> <span class='number'>0</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='ident'>c</span>.<span class='ident'>is_whitespace</span>() <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='ident'>P</span>::<span class='ident'>is_nonprefix_char</span>(<span class='kw-2'>&amp;</span><span class='ident'>c</span>) <span class='op'>=&gt;</span> {
           <span class='ident'>start</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>pos</span>;
           <span class='ident'>state</span> <span class='op'>|=</span> <span class='ident'>CAPTURE_START</span>;
         }
@@ -1116,21 +1123,19 @@
         }
         <span class='comment'>// A newline was encountered, and no newline was found before. This</span>
         <span class='comment'>// signifies a newline, but not a new paragraph.</span>
-        <span class='string'>&#39;\n&#39;</span> <span class='kw'>if</span> <span class='ident'>state</span> <span class='kw-2'>&amp;</span> <span class='ident'>NEWLINE_START</span> <span class='op'>==</span> <span class='number'>0</span> <span class='op'>=&gt;</span> {
-          <span class='ident'>state</span> <span class='op'>|=</span> <span class='ident'>NEWLINE_START</span>
-        }
+        <span class='string'>&#39;\n&#39;</span> <span class='kw'>if</span> <span class='ident'>state</span> <span class='kw-2'>&amp;</span> <span class='ident'>NEWLINE_START</span> <span class='op'>==</span> <span class='number'>0</span> <span class='op'>=&gt;</span> <span class='ident'>state</span> <span class='op'>|=</span> <span class='ident'>NEWLINE_START</span>,
         <span class='comment'>// A newline was encountered, and the above pattern was not matched. This</span>
         <span class='comment'>// signifies a string of newlines (a new paragraph).</span>
-        <span class='string'>&#39;\n&#39;</span> <span class='op'>=&gt;</span> {
-          <span class='ident'>state</span> <span class='op'>|=</span> <span class='ident'>PARAGPH_START</span>
-        }
-        _ <span class='op'>=&gt;</span> ()
+        <span class='string'>&#39;\n&#39;</span> <span class='op'>=&gt;</span> <span class='ident'>state</span> <span class='op'>|=</span> <span class='ident'>PARAGPH_START</span>,
+        _ <span class='op'>=&gt;</span> (),
       }
 
       <span class='self'>self</span>.<span class='ident'>pos</span> <span class='op'>+=</span> <span class='ident'>cur</span>.<span class='ident'>len_utf8</span>();
     }
 
-    <span class='kw'>if</span> <span class='ident'>state</span> <span class='kw-2'>&amp;</span> <span class='ident'>CAPTURE_START</span> <span class='op'>!=</span> <span class='number'>0</span> { <span class='macro'>return_token</span><span class='macro'>!</span>() }
+    <span class='kw'>if</span> <span class='ident'>state</span> <span class='kw-2'>&amp;</span> <span class='ident'>CAPTURE_START</span> <span class='op'>!=</span> <span class='number'>0</span> {
+      <span class='macro'>return_token</span><span class='macro'>!</span>()
+    }
 
     <span class='prelude-val'>None</span>
   }
@@ -1143,31 +1148,31 @@
 <span class='doccomment'>///</span>
 <span class='doccomment'>/// ```</span>
 <span class='doccomment'>/// # use punkt::{SentenceByteOffsetTokenizer, TrainingData};</span>
-<span class='doccomment'>/// # use punkt::params::Default;</span>
-<span class='doccomment'>/// # </span>
+<span class='doccomment'>/// # use punkt::params::Standard;</span>
+<span class='doccomment'>/// #</span>
 <span class='doccomment'>/// let doc = &quot;this is a great sentence! this is a sad sentence.&quot;;</span>
 <span class='doccomment'>/// let data = TrainingData::english();</span>
 <span class='doccomment'>///</span>
-<span class='doccomment'>/// for (start, end) in SentenceByteOffsetTokenizer::&lt;Default&gt;::new(doc, &amp;data) {</span>
-<span class='doccomment'>///   println!(&quot;{:?}&quot;, &amp;doc[start..end]); </span>
-<span class='doccomment'>/// } </span>
+<span class='doccomment'>/// for (start, end) in SentenceByteOffsetTokenizer::&lt;Standard&gt;::new(doc, &amp;data) {</span>
+<span class='doccomment'>///   println!(&quot;{:?}&quot;, &amp;doc[start..end]);</span>
+<span class='doccomment'>/// }</span>
 <span class='doccomment'>/// ```</span>
 <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>SentenceByteOffsetTokenizer</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>P</span><span class='op'>&gt;</span> {
   <span class='ident'>doc</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>str</span>,
-  <span class='ident'>data</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>TrainingData</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span>,
+  <span class='ident'>data</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>TrainingData</span>,
   <span class='ident'>iter</span>: <span class='ident'>PeriodContextTokenizer</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>P</span><span class='op'>&gt;</span>,
   <span class='ident'>last</span>: <span class='ident'>usize</span>,
-  <span class='ident'>params</span>: <span class='ident'>PhantomData</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span>
+  <span class='ident'>params</span>: <span class='ident'>PhantomData</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span>,
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>P</span><span class='op'>&gt;</span> <span class='ident'>SentenceByteOffsetTokenizer</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>P</span><span class='op'>&gt;</span> 
-  <span class='kw'>where</span> <span class='ident'>P</span> : <span class='ident'>DefinesNonPrefixCharacters</span> <span class='op'>+</span> <span class='ident'>DefinesNonWordCharacters</span> <span class='op'>+</span> 
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>P</span><span class='op'>&gt;</span> <span class='ident'>SentenceByteOffsetTokenizer</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>P</span><span class='op'>&gt;</span>
+  <span class='kw'>where</span> <span class='ident'>P</span> : <span class='ident'>DefinesNonPrefixCharacters</span> <span class='op'>+</span> <span class='ident'>DefinesNonWordCharacters</span> <span class='op'>+</span>
             <span class='ident'>DefinesPunctuation</span> <span class='op'>+</span> <span class='ident'>DefinesSentenceEndings</span>
 {
-  <span class='doccomment'>/// Creates a new `SentenceByteOffsetTokenizer`.</span>
+<span class='doccomment'>/// Creates a new `SentenceByteOffsetTokenizer`.</span>
   <span class='attribute'>#[<span class='ident'>inline</span>(<span class='ident'>always</span>)]</span> <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>(
-    <span class='ident'>doc</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>str</span>, 
-    <span class='ident'>data</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>TrainingData</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span>
+    <span class='ident'>doc</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>str</span>,
+    <span class='ident'>data</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>TrainingData</span>
   ) <span class='op'>-&gt;</span> <span class='ident'>SentenceByteOffsetTokenizer</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>P</span><span class='op'>&gt;</span> {
     <span class='ident'>SentenceByteOffsetTokenizer</span> {
       <span class='ident'>doc</span>: <span class='ident'>doc</span>,
@@ -1179,25 +1184,25 @@
   }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>P</span><span class='op'>&gt;</span> <span class='ident'>Iterator</span> <span class='kw'>for</span> <span class='ident'>SentenceByteOffsetTokenizer</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>P</span><span class='op'>&gt;</span> 
-  <span class='kw'>where</span> <span class='ident'>P</span> : <span class='ident'>DefinesNonPrefixCharacters</span> <span class='op'>+</span> <span class='ident'>DefinesNonWordCharacters</span> <span class='op'>+</span> 
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>P</span><span class='op'>&gt;</span> <span class='ident'>Iterator</span> <span class='kw'>for</span> <span class='ident'>SentenceByteOffsetTokenizer</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>P</span><span class='op'>&gt;</span>
+  <span class='kw'>where</span> <span class='ident'>P</span> : <span class='ident'>DefinesNonPrefixCharacters</span> <span class='op'>+</span> <span class='ident'>DefinesNonWordCharacters</span> <span class='op'>+</span>
             <span class='ident'>DefinesPunctuation</span> <span class='op'>+</span> <span class='ident'>DefinesSentenceEndings</span>
 {
-  <span class='kw'>type</span> <span class='ident'>Item</span> <span class='op'>=</span> (<span class='ident'>usize</span>, <span class='ident'>usize</span>); 
+  <span class='kw'>type</span> <span class='ident'>Item</span> <span class='op'>=</span> (<span class='ident'>usize</span>, <span class='ident'>usize</span>);
 
   <span class='kw'>fn</span> <span class='ident'>next</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span>(<span class='ident'>usize</span>, <span class='ident'>usize</span>)<span class='op'>&gt;</span> {
     <span class='kw'>while</span> <span class='kw'>let</span> <span class='prelude-val'>Some</span>((<span class='ident'>slice</span>, <span class='ident'>tok_start</span>, <span class='ident'>ws_start</span>, <span class='ident'>slice_end</span>, <span class='ident'>len</span>)) <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>iter</span>.<span class='ident'>next</span>() {
       <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>prv</span> <span class='op'>=</span> <span class='prelude-val'>None</span>;
       <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>has_sentence_break</span> <span class='op'>=</span> <span class='boolval'>false</span>;
 
-      <span class='comment'>// Get word tokens in the slice. If any of them has a sentence break,</span>
-      <span class='comment'>// then set the flag `has_sentence_break`.</span>
+<span class='comment'>// Get word tokens in the slice. If any of them has a sentence break,</span>
+<span class='comment'>// then set the flag `has_sentence_break`.</span>
       <span class='kw'>for</span> <span class='kw-2'>mut</span> <span class='ident'>t</span> <span class='kw'>in</span> <span class='ident'>WordTokenizer</span>::<span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span>::<span class='ident'>new</span>(<span class='ident'>slice</span>) {
-        <span class='comment'>// First pass annotation can occur for each token...</span>
+<span class='comment'>// First pass annotation can occur for each token...</span>
         ::<span class='ident'>util</span>::<span class='ident'>annotate_first_pass</span>::<span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>t</span>, <span class='self'>self</span>.<span class='ident'>data</span>);
 
-        <span class='comment'>// Second pass annotation is a bit more finicky...It depends on the </span>
-        <span class='comment'>// previous token that was found.</span>
+<span class='comment'>// Second pass annotation is a bit more finicky...It depends on the</span>
+<span class='comment'>// previous token that was found.</span>
         <span class='kw'>match</span> <span class='ident'>prv</span> {
           <span class='prelude-val'>Some</span>(<span class='kw-2'>mut</span> <span class='ident'>p</span>) <span class='op'>=&gt;</span> {
             <span class='ident'>annotate_second_pass</span>::<span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>t</span>, <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>p</span>, <span class='self'>self</span>.<span class='ident'>data</span>);
@@ -1213,15 +1218,15 @@
         <span class='ident'>prv</span> <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>t</span>);
       }
 
-      <span class='comment'>// If there is a token with a sentence break, it is the end of </span>
-      <span class='comment'>// a sentence. Set the beginning of the next sentence to the start </span>
-      <span class='comment'>// of the start of the token, or the end of the slice if the token is </span>
-      <span class='comment'>// punctuation. Then return the sentence.</span>
+<span class='comment'>// If there is a token with a sentence break, it is the end of</span>
+<span class='comment'>// a sentence. Set the beginning of the next sentence to the start</span>
+<span class='comment'>// of the start of the token, or the end of the slice if the token is</span>
+<span class='comment'>// punctuation. Then return the sentence.</span>
       <span class='kw'>if</span> <span class='ident'>has_sentence_break</span>  {
         <span class='kw'>let</span> <span class='ident'>start</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>last</span>;
 
         <span class='kw'>return</span> <span class='kw'>if</span> <span class='ident'>tok_start</span> <span class='op'>==</span> <span class='ident'>slice_end</span> {
-          <span class='self'>self</span>.<span class='ident'>last</span> <span class='op'>=</span> <span class='ident'>slice_end</span> <span class='op'>-</span> <span class='ident'>len</span>; 
+          <span class='self'>self</span>.<span class='ident'>last</span> <span class='op'>=</span> <span class='ident'>slice_end</span> <span class='op'>-</span> <span class='ident'>len</span>;
           <span class='prelude-val'>Some</span>((<span class='ident'>start</span>, <span class='self'>self</span>.<span class='ident'>last</span>))
         } <span class='kw'>else</span> {
           <span class='self'>self</span>.<span class='ident'>last</span> <span class='op'>=</span> <span class='ident'>tok_start</span>;
@@ -1230,8 +1235,8 @@
       }
     }
 
-    <span class='comment'>// TODO: NLTK gives you back the remaining text as a sentence, including </span>
-    <span class='comment'>// trailing whitespace. Ideally, this wouldn&#39;t return trailing whitespace. </span>
+<span class='comment'>// TODO: NLTK gives you back the remaining text as a sentence, including</span>
+<span class='comment'>// trailing whitespace. Ideally, this wouldn&#39;t return trailing whitespace.</span>
     <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>iter</span>.<span class='ident'>pos</span> <span class='op'>==</span> <span class='self'>self</span>.<span class='ident'>doc</span>.<span class='ident'>len</span>() {
       <span class='self'>self</span>.<span class='ident'>iter</span>.<span class='ident'>pos</span> <span class='op'>+=</span> <span class='number'>1</span>;
       <span class='prelude-val'>Some</span>((<span class='self'>self</span>.<span class='ident'>last</span>, <span class='self'>self</span>.<span class='ident'>doc</span>.<span class='ident'>len</span>()))
@@ -1248,29 +1253,29 @@
 <span class='doccomment'>///</span>
 <span class='doccomment'>/// ```</span>
 <span class='doccomment'>/// # use punkt::{SentenceTokenizer, TrainingData};</span>
-<span class='doccomment'>/// # use punkt::params::Default;</span>
+<span class='doccomment'>/// # use punkt::params::Standard;</span>
 <span class='doccomment'>/// #</span>
 <span class='doccomment'>/// let doc = &quot;this is a great sentence! this is a sad sentence.&quot;;</span>
 <span class='doccomment'>/// let data = TrainingData::english();</span>
 <span class='doccomment'>///</span>
-<span class='doccomment'>/// for sent in SentenceTokenizer::&lt;Default&gt;::new(doc, &amp;data) {</span>
-<span class='doccomment'>///   println!(&quot;{:?}&quot;, sent); </span>
-<span class='doccomment'>/// } </span>
+<span class='doccomment'>/// for sent in SentenceTokenizer::&lt;Standard&gt;::new(doc, &amp;data) {</span>
+<span class='doccomment'>///   println!(&quot;{:?}&quot;, sent);</span>
+<span class='doccomment'>/// }</span>
 <span class='doccomment'>/// ```</span>
 <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>SentenceTokenizer</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>P</span><span class='op'>&gt;</span> {
   <span class='ident'>doc</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>str</span>,
   <span class='ident'>iter</span>: <span class='ident'>SentenceByteOffsetTokenizer</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>P</span><span class='op'>&gt;</span>,
-  <span class='ident'>params</span>: <span class='ident'>PhantomData</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span>
+  <span class='ident'>params</span>: <span class='ident'>PhantomData</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span>,
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>P</span><span class='op'>&gt;</span> <span class='ident'>SentenceTokenizer</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>P</span><span class='op'>&gt;</span> 
-  <span class='kw'>where</span> <span class='ident'>P</span> : <span class='ident'>DefinesNonPrefixCharacters</span> <span class='op'>+</span> <span class='ident'>DefinesNonWordCharacters</span> <span class='op'>+</span> 
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>P</span><span class='op'>&gt;</span> <span class='ident'>SentenceTokenizer</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>P</span><span class='op'>&gt;</span>
+  <span class='kw'>where</span> <span class='ident'>P</span> : <span class='ident'>DefinesNonPrefixCharacters</span> <span class='op'>+</span> <span class='ident'>DefinesNonWordCharacters</span> <span class='op'>+</span>
             <span class='ident'>DefinesPunctuation</span> <span class='op'>+</span> <span class='ident'>DefinesSentenceEndings</span>
 {
-  <span class='doccomment'>/// Creates a new `SentenceTokenizer`.</span>
+<span class='doccomment'>/// Creates a new `SentenceTokenizer`.</span>
   <span class='attribute'>#[<span class='ident'>inline</span>(<span class='ident'>always</span>)]</span> <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>(
-    <span class='ident'>doc</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>str</span>, 
-    <span class='ident'>data</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>TrainingData</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span>
+    <span class='ident'>doc</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>str</span>,
+    <span class='ident'>data</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>TrainingData</span>
   ) <span class='op'>-&gt;</span> <span class='ident'>SentenceTokenizer</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>P</span><span class='op'>&gt;</span> {
     <span class='ident'>SentenceTokenizer</span> {
       <span class='ident'>doc</span>: <span class='ident'>doc</span>,
@@ -1280,8 +1285,8 @@
   }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>P</span><span class='op'>&gt;</span> <span class='ident'>Iterator</span> <span class='kw'>for</span> <span class='ident'>SentenceTokenizer</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>P</span><span class='op'>&gt;</span> 
-  <span class='kw'>where</span> <span class='ident'>P</span> : <span class='ident'>DefinesNonPrefixCharacters</span> <span class='op'>+</span> <span class='ident'>DefinesNonWordCharacters</span> <span class='op'>+</span> 
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>P</span><span class='op'>&gt;</span> <span class='ident'>Iterator</span> <span class='kw'>for</span> <span class='ident'>SentenceTokenizer</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>P</span><span class='op'>&gt;</span>
+  <span class='kw'>where</span> <span class='ident'>P</span> : <span class='ident'>DefinesNonPrefixCharacters</span> <span class='op'>+</span> <span class='ident'>DefinesNonWordCharacters</span> <span class='op'>+</span>
             <span class='ident'>DefinesPunctuation</span> <span class='op'>+</span> <span class='ident'>DefinesSentenceEndings</span>
 {
   <span class='kw'>type</span> <span class='ident'>Item</span> <span class='op'>=</span> <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>str</span>;
@@ -1292,25 +1297,22 @@
 }
 
 
-<span class='doccomment'>/// Orthographic heuristic uses structural properties of the token to </span>
-<span class='doccomment'>/// decide whether a token is the first in a sentence or not. If no </span>
+<span class='doccomment'>/// Orthographic heuristic uses structural properties of the token to</span>
+<span class='doccomment'>/// decide whether a token is the first in a sentence or not. If no</span>
 <span class='doccomment'>/// decision can be made, None is returned.</span>
-<span class='kw'>fn</span> <span class='ident'>orthographic_heuristic</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span>(
-  <span class='ident'>tok</span>: <span class='kw-2'>&amp;</span><span class='ident'>Token</span>,
-  <span class='ident'>data</span>: <span class='kw-2'>&amp;</span><span class='ident'>TrainingData</span>
-) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>bool</span><span class='op'>&gt;</span> <span class='kw'>where</span> <span class='ident'>P</span> : <span class='ident'>DefinesPunctuation</span> {
+<span class='kw'>fn</span> <span class='ident'>orthographic_heuristic</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span>(<span class='ident'>tok</span>: <span class='kw-2'>&amp;</span><span class='ident'>Token</span>, <span class='ident'>data</span>: <span class='kw-2'>&amp;</span><span class='ident'>TrainingData</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>bool</span><span class='op'>&gt;</span>
+  <span class='kw'>where</span> <span class='ident'>P</span>: <span class='ident'>DefinesPunctuation</span>
+{
   <span class='kw'>use</span> <span class='ident'>prelude</span>::{<span class='ident'>ORT_LC</span>, <span class='ident'>MID_UC</span>, <span class='ident'>ORT_UC</span>, <span class='ident'>BEG_LC</span>};
 
   <span class='kw'>if</span> <span class='ident'>P</span>::<span class='ident'>is_punctuation</span>(<span class='kw-2'>&amp;</span><span class='ident'>tok</span>.<span class='ident'>tok</span>().<span class='ident'>char_at</span>(<span class='number'>0</span>)) {
     <span class='prelude-val'>Some</span>(<span class='boolval'>false</span>)
   } <span class='kw'>else</span> {
-    <span class='kw'>let</span> <span class='ident'>ctxt</span> <span class='op'>=</span> <span class='ident'>data</span>.<span class='ident'>get_orthographic_context</span>(<span class='ident'>tok</span>.<span class='ident'>typ_without_break_or_period</span>()); 
+    <span class='kw'>let</span> <span class='ident'>ctxt</span> <span class='op'>=</span> <span class='ident'>data</span>.<span class='ident'>get_orthographic_context</span>(<span class='ident'>tok</span>.<span class='ident'>typ_without_break_or_period</span>());
 
     <span class='kw'>if</span> <span class='ident'>tok</span>.<span class='ident'>is_uppercase</span>() <span class='op'>&amp;&amp;</span> (<span class='ident'>ctxt</span> <span class='kw-2'>&amp;</span> <span class='ident'>ORT_LC</span> <span class='op'>!=</span> <span class='number'>0</span>) <span class='op'>&amp;&amp;</span> (<span class='ident'>ctxt</span> <span class='kw-2'>&amp;</span> <span class='ident'>MID_UC</span> <span class='op'>==</span> <span class='number'>0</span>) {
       <span class='prelude-val'>Some</span>(<span class='boolval'>true</span>)
-    } <span class='kw'>else</span> <span class='kw'>if</span> <span class='ident'>tok</span>.<span class='ident'>is_lowercase</span>() <span class='op'>&amp;&amp;</span> 
-      ((<span class='ident'>ctxt</span> <span class='kw-2'>&amp;</span> <span class='ident'>ORT_UC</span> <span class='op'>!=</span> <span class='number'>0</span>) <span class='op'>||</span> (<span class='ident'>ctxt</span> <span class='kw-2'>&amp;</span> <span class='ident'>BEG_LC</span> <span class='op'>==</span> <span class='number'>0</span>))
-    {
+    } <span class='kw'>else</span> <span class='kw'>if</span> <span class='ident'>tok</span>.<span class='ident'>is_lowercase</span>() <span class='op'>&amp;&amp;</span> ((<span class='ident'>ctxt</span> <span class='kw-2'>&amp;</span> <span class='ident'>ORT_UC</span> <span class='op'>!=</span> <span class='number'>0</span>) <span class='op'>||</span> (<span class='ident'>ctxt</span> <span class='kw-2'>&amp;</span> <span class='ident'>BEG_LC</span> <span class='op'>==</span> <span class='number'>0</span>)) {
       <span class='prelude-val'>Some</span>(<span class='boolval'>false</span>)
     } <span class='kw'>else</span> {
       <span class='prelude-val'>None</span>
@@ -1320,34 +1322,28 @@
 
 
 <span class='doccomment'>/// Performs a second pass annotation on the tokens revising any previously</span>
-<span class='doccomment'>/// made decisions if new, relevant data is known. </span>
-<span class='kw'>fn</span> <span class='ident'>annotate_second_pass</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span>(
-  <span class='ident'>cur</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Token</span>,
-  <span class='ident'>prv</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Token</span>,
-  <span class='ident'>data</span>: <span class='kw-2'>&amp;</span><span class='ident'>TrainingData</span>
-) <span class='kw'>where</span> <span class='ident'>P</span> : <span class='ident'>DefinesPunctuation</span> {
+<span class='doccomment'>/// made decisions if new, relevant data is known.</span>
+<span class='kw'>fn</span> <span class='ident'>annotate_second_pass</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span>(<span class='ident'>cur</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Token</span>, <span class='ident'>prv</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Token</span>, <span class='ident'>data</span>: <span class='kw-2'>&amp;</span><span class='ident'>TrainingData</span>)
+  <span class='kw'>where</span> <span class='ident'>P</span>: <span class='ident'>DefinesPunctuation</span>
+{
   <span class='kw'>use</span> <span class='ident'>prelude</span>::<span class='ident'>ORT_LC</span>;
 
-  <span class='kw'>if</span> <span class='ident'>data</span>.<span class='ident'>contains_collocation</span>(
-    <span class='ident'>prv</span>.<span class='ident'>typ_without_period</span>(), <span class='ident'>cur</span>.<span class='ident'>typ_without_break_or_period</span>())
-  {
+  <span class='kw'>if</span> <span class='ident'>data</span>.<span class='ident'>contains_collocation</span>(<span class='ident'>prv</span>.<span class='ident'>typ_without_period</span>(), <span class='ident'>cur</span>.<span class='ident'>typ_without_break_or_period</span>()) {
     <span class='ident'>prv</span>.<span class='ident'>set_is_abbrev</span>(<span class='boolval'>true</span>);
     <span class='ident'>prv</span>.<span class='ident'>set_is_sentence_break</span>(<span class='boolval'>false</span>);
-    <span class='kw'>return</span>; 
+    <span class='kw'>return</span>;
   }
 
   <span class='kw'>if</span> (<span class='ident'>prv</span>.<span class='ident'>is_abbrev</span>() <span class='op'>||</span> <span class='ident'>prv</span>.<span class='ident'>is_ellipsis</span>()) <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='ident'>prv</span>.<span class='ident'>is_initial</span>() {
     <span class='comment'>// Abbreviation with orthographic heuristic</span>
     <span class='kw'>if</span> <span class='ident'>orthographic_heuristic</span>::<span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span>(<span class='ident'>cur</span>, <span class='ident'>data</span>).<span class='ident'>unwrap_or</span>(<span class='boolval'>false</span>) {
       <span class='ident'>prv</span>.<span class='ident'>set_is_sentence_break</span>(<span class='boolval'>true</span>);
-      <span class='kw'>return</span>; 
+      <span class='kw'>return</span>;
     }
 
     <span class='comment'>// Abbreviation with sentence starter</span>
-    <span class='kw'>if</span> <span class='ident'>cur</span>.<span class='ident'>is_uppercase</span>() <span class='op'>&amp;&amp;</span> 
-       <span class='ident'>data</span>.<span class='ident'>contains_sentence_starter</span>(<span class='ident'>cur</span>.<span class='ident'>typ_without_break_or_period</span>())
-    {
-      <span class='ident'>prv</span>.<span class='ident'>set_is_sentence_break</span>(<span class='boolval'>true</span>); 
+    <span class='kw'>if</span> <span class='ident'>cur</span>.<span class='ident'>is_uppercase</span>() <span class='op'>&amp;&amp;</span> <span class='ident'>data</span>.<span class='ident'>contains_sentence_starter</span>(<span class='ident'>cur</span>.<span class='ident'>typ_without_break_or_period</span>()) {
+      <span class='ident'>prv</span>.<span class='ident'>set_is_sentence_break</span>(<span class='boolval'>true</span>);
       <span class='kw'>return</span>;
     }
   }
@@ -1358,18 +1354,14 @@
     <span class='comment'>// Initial or Number with orthographic heuristic</span>
     <span class='kw'>if</span> <span class='op'>!</span><span class='ident'>ortho_dec</span>.<span class='ident'>unwrap_or</span>(<span class='boolval'>true</span>) {
       <span class='ident'>prv</span>.<span class='ident'>set_is_sentence_break</span>(<span class='boolval'>false</span>);
-      <span class='ident'>prv</span>.<span class='ident'>set_is_abbrev</span>(<span class='boolval'>true</span>); 
+      <span class='ident'>prv</span>.<span class='ident'>set_is_abbrev</span>(<span class='boolval'>true</span>);
       <span class='kw'>return</span>;
     }
 
     <span class='kw'>let</span> <span class='ident'>ctxt</span> <span class='op'>=</span> <span class='ident'>data</span>.<span class='ident'>get_orthographic_context</span>(<span class='ident'>cur</span>.<span class='ident'>typ_without_break_or_period</span>());
 
     <span class='comment'>// Initial with special orthographic heuristic</span>
-    <span class='kw'>if</span> <span class='ident'>ortho_dec</span>.<span class='ident'>is_none</span>() <span class='op'>&amp;&amp;</span> 
-       <span class='ident'>prv</span>.<span class='ident'>is_initial</span>() <span class='op'>&amp;&amp;</span> 
-       <span class='ident'>cur</span>.<span class='ident'>is_uppercase</span>() <span class='op'>&amp;&amp;</span>
-       <span class='ident'>ctxt</span> <span class='kw-2'>&amp;</span> <span class='ident'>ORT_LC</span> <span class='op'>==</span> <span class='number'>0</span>
-    {
+    <span class='kw'>if</span> <span class='ident'>ortho_dec</span>.<span class='ident'>is_none</span>() <span class='op'>&amp;&amp;</span> <span class='ident'>prv</span>.<span class='ident'>is_initial</span>() <span class='op'>&amp;&amp;</span> <span class='ident'>cur</span>.<span class='ident'>is_uppercase</span>() <span class='op'>&amp;&amp;</span> <span class='ident'>ctxt</span> <span class='kw-2'>&amp;</span> <span class='ident'>ORT_LC</span> <span class='op'>==</span> <span class='number'>0</span> {
       <span class='ident'>prv</span>.<span class='ident'>set_is_sentence_break</span>(<span class='boolval'>false</span>);
       <span class='ident'>prv</span>.<span class='ident'>set_is_abbrev</span>(<span class='boolval'>true</span>);
     }
@@ -1377,7 +1369,7 @@
 }
 
 
-<span class='doccomment'>/// Checks if the a slice of the document starting at pos </span>
+<span class='doccomment'>/// Checks if the a slice of the document starting at pos</span>
 <span class='doccomment'>/// is a multi char (ex. &quot;...&quot;, &quot;. . .&quot;, &quot;--&quot;).</span>
 <span class='doccomment'>/// These are all one-width chars, so iterating by 1 is OK.</span>
 <span class='kw'>fn</span> <span class='ident'>is_multi_char</span>(<span class='ident'>doc</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>, <span class='ident'>start</span>: <span class='ident'>usize</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='kw-2'>&amp;</span><span class='ident'>str</span><span class='op'>&gt;</span> {
@@ -1391,21 +1383,23 @@
     <span class='kw'>let</span> <span class='ident'>c</span> <span class='op'>=</span> <span class='ident'>doc</span>.<span class='ident'>as_bytes</span>()[<span class='ident'>end</span>];
 
     <span class='kw'>match</span> <span class='ident'>c</span> {
-      <span class='comment'>// Hit a dash, and our previous was a dash -- </span>
+      <span class='comment'>// Hit a dash, and our previous was a dash --</span>
       <span class='comment'>// continue matching dashes.</span>
       <span class='string'>b&#39;-&#39;</span> <span class='kw'>if</span> <span class='ident'>prv</span> <span class='op'>==</span> <span class='string'>b&#39;-&#39;</span> <span class='op'>=&gt;</span> (),
       <span class='comment'>// Hit a period, and our previous was a period or</span>
-      <span class='comment'>// space. This is valid, skip. </span>
+      <span class='comment'>// space. This is valid, skip.</span>
       <span class='string'>b&#39;.&#39;</span> <span class='kw'>if</span> <span class='ident'>prv</span> <span class='op'>==</span> <span class='string'>b&#39;.&#39;</span> <span class='op'>||</span> <span class='ident'>prv</span> <span class='op'>==</span> <span class='string'>b&#39; &#39;</span> <span class='op'>=&gt;</span> (),
-      <span class='comment'>// Hit a space, and our previous was a period. </span>
+      <span class='comment'>// Hit a space, and our previous was a period.</span>
       <span class='comment'>// Could be a ellipsis -- continue.</span>
       <span class='string'>b&#39; &#39;</span> <span class='kw'>if</span> <span class='ident'>prv</span> <span class='op'>==</span> <span class='string'>b&#39;.&#39;</span> <span class='op'>=&gt;</span> (),
-      <span class='comment'>// Hit a non-multi-char character. If the previous </span>
-      <span class='comment'>// was a space, truncate it. Then break, and check </span>
+      <span class='comment'>// Hit a non-multi-char character. If the previous</span>
+      <span class='comment'>// was a space, truncate it. Then break, and check</span>
       <span class='comment'>// if our word was long enough.</span>
-      _ <span class='op'>=&gt;</span> { 
-        <span class='kw'>if</span> <span class='ident'>prv</span> <span class='op'>==</span> <span class='string'>b&#39; &#39;</span> { <span class='ident'>end</span> <span class='op'>-=</span> <span class='number'>1</span>; }
-        <span class='kw'>break</span> 
+      _ <span class='op'>=&gt;</span> {
+        <span class='kw'>if</span> <span class='ident'>prv</span> <span class='op'>==</span> <span class='string'>b&#39; &#39;</span> {
+          <span class='ident'>end</span> <span class='op'>-=</span> <span class='number'>1</span>;
+        }
+        <span class='kw'>break</span>;
       }
     }
 
@@ -1413,17 +1407,21 @@
     <span class='ident'>end</span> <span class='op'>+=</span> <span class='number'>1</span>;
   }
 
-  <span class='kw'>if</span> <span class='ident'>end</span> <span class='op'>-</span> <span class='ident'>start</span> <span class='op'>&gt;</span> <span class='number'>1</span> { <span class='prelude-val'>Some</span>(<span class='kw-2'>&amp;</span><span class='ident'>doc</span>[<span class='ident'>start</span>..<span class='ident'>end</span>]) } <span class='kw'>else</span> { <span class='prelude-val'>None</span> }
+  <span class='kw'>if</span> <span class='ident'>end</span> <span class='op'>-</span> <span class='ident'>start</span> <span class='op'>&gt;</span> <span class='number'>1</span> {
+    <span class='prelude-val'>Some</span>(<span class='kw-2'>&amp;</span><span class='ident'>doc</span>[<span class='ident'>start</span>..<span class='ident'>end</span>])
+  } <span class='kw'>else</span> {
+    <span class='prelude-val'>None</span>
+  }
 }
 
 
-<span class='attribute'>#[<span class='ident'>test</span>]</span> <span class='kw'>fn</span> <span class='ident'>periodctxt_tokenizer_compare_nltk</span>() {
+<span class='attribute'>#[<span class='ident'>test</span>]</span>
+<span class='kw'>fn</span> <span class='ident'>periodctxt_tokenizer_compare_nltk</span>() {
   <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>iter</span>::<span class='ident'>Iterator</span>;
-  <span class='kw'>use</span> <span class='ident'>prelude</span>::<span class='ident'>Default</span>;
+  <span class='kw'>use</span> <span class='ident'>prelude</span>::<span class='ident'>Standard</span>;
 
-  <span class='kw'>for</span> (<span class='ident'>expected</span>, <span class='ident'>raw</span>, <span class='ident'>file</span>) 
-  <span class='kw'>in</span> <span class='ident'>super</span>::<span class='ident'>get_test_scenarios</span>(<span class='string'>&quot;test/word-periodctxt/&quot;</span>, <span class='string'>&quot;test/raw/&quot;</span>) {
-    <span class='kw'>let</span> <span class='ident'>iter</span>: <span class='ident'>PeriodContextTokenizer</span><span class='op'>&lt;</span><span class='ident'>Default</span><span class='op'>&gt;</span> <span class='op'>=</span> <span class='ident'>PeriodContextTokenizer</span>::<span class='ident'>new</span>(<span class='kw-2'>&amp;</span><span class='ident'>raw</span>[..]);
+  <span class='kw'>for</span> (<span class='ident'>expected</span>, <span class='ident'>raw</span>, <span class='ident'>file</span>) <span class='kw'>in</span> <span class='ident'>super</span>::<span class='ident'>get_test_scenarios</span>(<span class='string'>&quot;test/word-periodctxt/&quot;</span>, <span class='string'>&quot;test/raw/&quot;</span>) {
+    <span class='kw'>let</span> <span class='ident'>iter</span>: <span class='ident'>PeriodContextTokenizer</span><span class='op'>&lt;</span><span class='ident'>Standard</span><span class='op'>&gt;</span> <span class='op'>=</span> <span class='ident'>PeriodContextTokenizer</span>::<span class='ident'>new</span>(<span class='kw-2'>&amp;</span><span class='ident'>raw</span>[..]);
 
     <span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;  running periodctxt tests for &#39;{:?}&#39;&quot;</span>, <span class='ident'>file</span>);
 
@@ -1437,45 +1435,47 @@
 }
 
 
-<span class='attribute'>#[<span class='ident'>test</span>]</span> <span class='kw'>fn</span> <span class='ident'>smoke_test_is_multi_char_pass</span>() {
+<span class='attribute'>#[<span class='ident'>test</span>]</span>
+<span class='kw'>fn</span> <span class='ident'>smoke_test_is_multi_char_pass</span>() {
   <span class='kw'>let</span> <span class='ident'>docs</span> <span class='op'>=</span> <span class='macro'>vec</span><span class='macro'>!</span>[<span class='string'>&quot;. . .&quot;</span>, <span class='string'>&quot;..&quot;</span>, <span class='string'>&quot;--&quot;</span>, <span class='string'>&quot;---&quot;</span>, <span class='string'>&quot;. . . . .&quot;</span>, <span class='string'>&quot;.. ..&quot;</span>];
-  
+
   <span class='kw'>for</span> <span class='ident'>d</span> <span class='kw'>in</span> <span class='ident'>docs</span>.<span class='ident'>iter</span>() {
     <span class='macro'>assert</span><span class='macro'>!</span>(<span class='ident'>is_multi_char</span>(<span class='op'>*</span><span class='ident'>d</span>, <span class='number'>0</span>).<span class='ident'>is_some</span>(), <span class='string'>&quot;failed {}&quot;</span>, <span class='op'>*</span><span class='ident'>d</span>);
   }
 }
 
 
-<span class='attribute'>#[<span class='ident'>test</span>]</span> <span class='kw'>fn</span> <span class='ident'>word_tokenizer_compare_nltk</span>() {
-  <span class='kw'>use</span> <span class='ident'>prelude</span>::<span class='ident'>Default</span>;
+<span class='attribute'>#[<span class='ident'>test</span>]</span>
+<span class='kw'>fn</span> <span class='ident'>word_tokenizer_compare_nltk</span>() {
+  <span class='kw'>use</span> <span class='ident'>prelude</span>::<span class='ident'>Standard</span>;
 
-  <span class='kw'>for</span> (<span class='ident'>expected</span>, <span class='ident'>raw</span>, <span class='ident'>file</span>) 
-  <span class='kw'>in</span> <span class='ident'>super</span>::<span class='ident'>get_test_scenarios</span>(<span class='string'>&quot;test/word-training&quot;</span>, <span class='string'>&quot;test/raw/&quot;</span>) {
-    <span class='kw'>let</span> <span class='ident'>iter</span>: <span class='ident'>WordTokenizer</span><span class='op'>&lt;</span><span class='ident'>Default</span><span class='op'>&gt;</span> <span class='op'>=</span> <span class='ident'>WordTokenizer</span>::<span class='ident'>new</span>(<span class='kw-2'>&amp;</span><span class='ident'>raw</span>[..]);
+  <span class='kw'>for</span> (<span class='ident'>expected</span>, <span class='ident'>raw</span>, <span class='ident'>file</span>) <span class='kw'>in</span> <span class='ident'>super</span>::<span class='ident'>get_test_scenarios</span>(<span class='string'>&quot;test/word-training&quot;</span>, <span class='string'>&quot;test/raw/&quot;</span>) {
+    <span class='kw'>let</span> <span class='ident'>iter</span>: <span class='ident'>WordTokenizer</span><span class='op'>&lt;</span><span class='ident'>Standard</span><span class='op'>&gt;</span> <span class='op'>=</span> <span class='ident'>WordTokenizer</span>::<span class='ident'>new</span>(<span class='kw-2'>&amp;</span><span class='ident'>raw</span>[..]);
 
     <span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;  running wordtok tests for {:?}&quot;</span>, <span class='ident'>file</span>);
 
     <span class='kw'>for</span> (<span class='ident'>t</span>, <span class='ident'>e</span>) <span class='kw'>in</span> <span class='ident'>iter</span>.<span class='ident'>zip</span>(<span class='ident'>expected</span>) {
-      <span class='macro'>assert</span><span class='macro'>!</span>(
-        <span class='ident'>t</span>.<span class='ident'>typ</span>().<span class='ident'>to_lowercase</span>() <span class='op'>==</span> <span class='ident'>e</span>.<span class='ident'>trim</span>(), 
-        <span class='string'>&quot;{} - you: [{}] != exp: [{}]&quot;</span>, 
-        <span class='ident'>file</span>,
-        <span class='ident'>t</span>.<span class='ident'>typ</span>().<span class='ident'>to_lowercase</span>(),
-        <span class='ident'>e</span>.<span class='ident'>trim</span>());
+      <span class='macro'>assert</span><span class='macro'>!</span>(<span class='ident'>t</span>.<span class='ident'>typ</span>().<span class='ident'>to_lowercase</span>() <span class='op'>==</span> <span class='ident'>e</span>.<span class='ident'>trim</span>(),
+              <span class='string'>&quot;{} - you: [{}] != exp: [{}]&quot;</span>,
+              <span class='ident'>file</span>,
+              <span class='ident'>t</span>.<span class='ident'>typ</span>().<span class='ident'>to_lowercase</span>(),
+              <span class='ident'>e</span>.<span class='ident'>trim</span>());
     }
   }
 }
 
 
-<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>test</span>)]</span> <span class='kw'>fn</span> <span class='ident'>train_on_document</span>(<span class='ident'>data</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>TrainingData</span>, <span class='ident'>doc</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>) {
+<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>test</span>)]</span>
+<span class='kw'>fn</span> <span class='ident'>train_on_document</span>(<span class='ident'>data</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>TrainingData</span>, <span class='ident'>doc</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>) {
   <span class='kw'>use</span> <span class='ident'>trainer</span>::<span class='ident'>Trainer</span>;
 
-  <span class='kw'>let</span> <span class='ident'>trainer</span>: <span class='ident'>Trainer</span><span class='op'>&lt;</span>::<span class='ident'>prelude</span>::<span class='ident'>Default</span><span class='op'>&gt;</span> <span class='op'>=</span> <span class='ident'>Trainer</span>::<span class='ident'>new</span>();
+  <span class='kw'>let</span> <span class='ident'>trainer</span>: <span class='ident'>Trainer</span><span class='op'>&lt;</span>::<span class='ident'>prelude</span>::<span class='ident'>Standard</span><span class='op'>&gt;</span> <span class='op'>=</span> <span class='ident'>Trainer</span>::<span class='ident'>new</span>();
   <span class='ident'>trainer</span>.<span class='ident'>train</span>(<span class='kw-2'>&amp;</span><span class='ident'>doc</span>, <span class='ident'>data</span>);
 }
 
 
-<span class='attribute'>#[<span class='ident'>test</span>]</span> <span class='kw'>fn</span> <span class='ident'>sentence_tokenizer_compare_nltk_train_on_document</span>() {
+<span class='attribute'>#[<span class='ident'>test</span>]</span>
+<span class='kw'>fn</span> <span class='ident'>sentence_tokenizer_compare_nltk_train_on_document</span>() {
   <span class='kw'>let</span> <span class='ident'>cases</span> <span class='op'>=</span> <span class='ident'>super</span>::<span class='ident'>get_test_scenarios</span>(<span class='string'>&quot;test/sentence/&quot;</span>, <span class='string'>&quot;test/raw/&quot;</span>);
 
   <span class='kw'>for</span> (<span class='ident'>expected</span>, <span class='ident'>raw</span>, <span class='ident'>file</span>) <span class='kw'>in</span> <span class='ident'>cases</span> {
@@ -1485,31 +1485,30 @@
 
     <span class='ident'>train_on_document</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>data</span>, <span class='kw-2'>&amp;</span><span class='ident'>raw</span>[..]);
 
-    <span class='kw'>let</span> <span class='ident'>iter</span>: <span class='ident'>SentenceTokenizer</span><span class='op'>&lt;</span>::<span class='ident'>prelude</span>::<span class='ident'>Default</span><span class='op'>&gt;</span> <span class='op'>=</span> 
-      <span class='ident'>SentenceTokenizer</span>::<span class='ident'>new</span>(<span class='kw-2'>&amp;</span><span class='ident'>raw</span>[..], <span class='kw-2'>&amp;</span><span class='ident'>data</span>);
-    
+    <span class='kw'>let</span> <span class='ident'>iter</span>: <span class='ident'>SentenceTokenizer</span><span class='op'>&lt;</span>::<span class='ident'>prelude</span>::<span class='ident'>Standard</span><span class='op'>&gt;</span> <span class='op'>=</span> <span class='ident'>SentenceTokenizer</span>::<span class='ident'>new</span>(<span class='kw-2'>&amp;</span><span class='ident'>raw</span>[..], <span class='kw-2'>&amp;</span><span class='ident'>data</span>);
+
     <span class='kw'>for</span> (<span class='ident'>t</span>, <span class='ident'>e</span>) <span class='kw'>in</span> <span class='ident'>iter</span>.<span class='ident'>zip</span>(<span class='ident'>expected</span>.<span class='ident'>iter</span>()) {
       <span class='kw'>let</span> <span class='ident'>s</span> <span class='op'>=</span> <span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;[{}]&quot;</span>, <span class='ident'>t</span>)
-        .<span class='ident'>replace</span>(<span class='string'>&quot;\&quot;&quot;</span>, <span class='string'>&quot;\\\&quot;&quot;</span>)
-        .<span class='ident'>replace</span>(<span class='string'>&quot;\n&quot;</span>, <span class='string'>&quot;\\n&quot;</span>)
-        .<span class='ident'>replace</span>(<span class='string'>&quot;\r&quot;</span>, <span class='string'>&quot;&quot;</span>);
+                .<span class='ident'>replace</span>(<span class='string'>&quot;\&quot;&quot;</span>, <span class='string'>&quot;\\\&quot;&quot;</span>)
+                .<span class='ident'>replace</span>(<span class='string'>&quot;\n&quot;</span>, <span class='string'>&quot;\\n&quot;</span>)
+                .<span class='ident'>replace</span>(<span class='string'>&quot;\r&quot;</span>, <span class='string'>&quot;&quot;</span>);
 
-      <span class='macro'>assert</span><span class='macro'>!</span>(
-        <span class='ident'>s</span> <span class='op'>==</span> <span class='ident'>e</span>.<span class='ident'>trim</span>(),
-        <span class='string'>&quot;{} - you: [{}] != exp: [{}]&quot;</span>, 
-        <span class='ident'>file</span>,
-        <span class='ident'>s</span>,
-        <span class='ident'>e</span>.<span class='ident'>trim</span>());
+      <span class='macro'>assert</span><span class='macro'>!</span>(<span class='ident'>s</span> <span class='op'>==</span> <span class='ident'>e</span>.<span class='ident'>trim</span>(),
+              <span class='string'>&quot;{} - you: [{}] != exp: [{}]&quot;</span>,
+              <span class='ident'>file</span>,
+              <span class='ident'>s</span>,
+              <span class='ident'>e</span>.<span class='ident'>trim</span>());
     }
   }
 }
 
 
 <span class='comment'>// https://github.com/ferristseng/rust-punkt/issues/5</span>
-<span class='attribute'>#[<span class='ident'>test</span>]</span> <span class='kw'>fn</span> <span class='ident'>sentence_tokenizer_issue_5_test</span>() {
+<span class='attribute'>#[<span class='ident'>test</span>]</span>
+<span class='kw'>fn</span> <span class='ident'>sentence_tokenizer_issue_5_test</span>() {
   <span class='kw'>let</span> <span class='ident'>data</span> <span class='op'>=</span> <span class='ident'>TrainingData</span>::<span class='ident'>english</span>();
   <span class='kw'>let</span> <span class='ident'>doc</span> <span class='op'>=</span> <span class='string'>&quot;this is a great sentence! this is a sad sentence.&quot;</span>;
-  <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>iter</span> <span class='op'>=</span> <span class='ident'>SentenceTokenizer</span>::<span class='op'>&lt;</span>::<span class='ident'>params</span>::<span class='ident'>Default</span><span class='op'>&gt;</span>::<span class='ident'>new</span>(<span class='ident'>doc</span>, <span class='kw-2'>&amp;</span><span class='ident'>data</span>);
+  <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>iter</span> <span class='op'>=</span> <span class='ident'>SentenceTokenizer</span>::<span class='op'>&lt;</span>::<span class='ident'>params</span>::<span class='ident'>Standard</span><span class='op'>&gt;</span>::<span class='ident'>new</span>(<span class='ident'>doc</span>, <span class='kw-2'>&amp;</span><span class='ident'>data</span>);
 
   <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>iter</span>.<span class='ident'>next</span>().<span class='ident'>unwrap</span>(), <span class='string'>&quot;this is a great sentence!&quot;</span>);
   <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>iter</span>.<span class='ident'>next</span>().<span class='ident'>unwrap</span>(), <span class='string'>&quot;this is a sad sentence.&quot;</span>);
@@ -1520,7 +1519,7 @@
   (<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>name</span>:<span class='ident'>ident</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>doc</span>:<span class='ident'>expr</span>) <span class='op'>=&gt;</span> (
     <span class='attribute'>#[<span class='ident'>bench</span>]</span> <span class='kw'>fn</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>name</span>(<span class='ident'>b</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> ::<span class='ident'>test</span>::<span class='ident'>Bencher</span>) {
       <span class='ident'>b</span>.<span class='ident'>iter</span>(<span class='op'>||</span> {
-        <span class='kw'>let</span> <span class='ident'>t</span>: <span class='ident'>WordTokenizer</span><span class='op'>&lt;</span>::<span class='ident'>prelude</span>::<span class='ident'>Default</span><span class='op'>&gt;</span> <span class='op'>=</span> <span class='ident'>WordTokenizer</span>::<span class='ident'>new</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>doc</span>);
+        <span class='kw'>let</span> <span class='ident'>t</span>: <span class='ident'>WordTokenizer</span><span class='op'>&lt;</span>::<span class='ident'>prelude</span>::<span class='ident'>Standard</span><span class='op'>&gt;</span> <span class='op'>=</span> <span class='ident'>WordTokenizer</span>::<span class='ident'>new</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>doc</span>);
         <span class='kw'>let</span> _: <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>Token</span><span class='op'>&gt;</span> <span class='op'>=</span> <span class='ident'>t</span>.<span class='ident'>collect</span>();
       })
     }
@@ -1528,7 +1527,7 @@
 );
 
 <span class='macro'>bench_word_tokenizer</span><span class='macro'>!</span>(
-  <span class='ident'>word_tokenizer_bench_short</span>, 
+  <span class='ident'>word_tokenizer_bench_short</span>,
   <span class='macro'>include_str</span><span class='macro'>!</span>(<span class='string'>&quot;../test/raw/sigma-wiki.txt&quot;</span>));
 
 <span class='macro'>bench_word_tokenizer</span><span class='macro'>!</span>(
@@ -1554,7 +1553,7 @@
 
         <span class='ident'>train_on_document</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>data</span>, <span class='ident'>doc</span>);
 
-        <span class='kw'>let</span> <span class='ident'>iter</span>: <span class='ident'>SentenceTokenizer</span><span class='op'>&lt;</span>::<span class='ident'>prelude</span>::<span class='ident'>Default</span><span class='op'>&gt;</span> <span class='op'>=</span> 
+        <span class='kw'>let</span> <span class='ident'>iter</span>: <span class='ident'>SentenceTokenizer</span><span class='op'>&lt;</span>::<span class='ident'>prelude</span>::<span class='ident'>Standard</span><span class='op'>&gt;</span> <span class='op'>=</span>
           <span class='ident'>SentenceTokenizer</span>::<span class='ident'>new</span>(<span class='ident'>doc</span>, <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>data</span>);
         <span class='kw'>let</span> _: <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='kw-2'>&amp;</span><span class='ident'>str</span><span class='op'>&gt;</span> <span class='op'>=</span> <span class='ident'>iter</span>.<span class='ident'>collect</span>();
       })
@@ -1563,7 +1562,7 @@
 );
 
 <span class='macro'>bench_sentence_tokenizer</span><span class='macro'>!</span>(
-  <span class='ident'>bench_sentence_tokenizer_train_on_document_short</span>, 
+  <span class='ident'>bench_sentence_tokenizer_train_on_document_short</span>,
   <span class='macro'>include_str</span><span class='macro'>!</span>(<span class='string'>&quot;../test/raw/sigma-wiki.txt&quot;</span>));
 
 <span class='macro'>bench_sentence_tokenizer</span><span class='macro'>!</span>(
@@ -1579,40 +1578,49 @@
 
     <section class="footer"></section>
 
-    <div id="help" class="hidden">
-        <div class="shortcuts">
-            <h1>Keyboard shortcuts</h1>
-            <dl>
-                <dt>?</dt>
-                <dd>Show this help dialog</dd>
-                <dt>S</dt>
-                <dd>Focus the search field</dd>
-                <dt>&larrb;</dt>
-                <dd>Move up in search results</dd>
-                <dt>&rarrb;</dt>
-                <dd>Move down in search results</dd>
-                <dt>&#9166;</dt>
-                <dd>Go to active search result</dd>
-            </dl>
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code>)
+                </p>
+            </div>
         </div>
-        <div class="infos">
-            <h1>Search tricks</h1>
-            <p>
-                Prefix searches with a type followed by a colon (e.g.
-                <code>fn:</code>) to restrict the search to a given type.
-            </p>
-            <p>
-                Accepted types are: <code>fn</code>, <code>mod</code>,
-                <code>struct</code>, <code>enum</code>,
-                <code>trait</code>, <code>typedef</code> (or
-                <code>tdef</code>).
-            </p>
-            <p>
-                Search functions by type signature (e.g.
-                <code>vec -> usize</code>)
-            </p>
-        </div>
-    </div>
+    </aside>
 
     
 
@@ -1624,6 +1632,6 @@
     <script src="../../jquery.js"></script>
     <script src="../../main.js"></script>
     
-    <script async src="../../search-index.js"></script>
+    <script defer src="../../search-index.js"></script>
 </body>
 </html>

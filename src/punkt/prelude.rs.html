@@ -4,11 +4,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `src\prelude.rs`.">
+    <meta name="description" content="Source to the Rust file `src/prelude.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>prelude.rs.html -- source</title>
 
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../../main.css">
 
     
@@ -24,17 +25,17 @@
 
     
 
-    <section class="sidebar">
+    <nav class="sidebar">
         
         
-    </section>
+    </nav>
 
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
                 <input class="search-input" name="search"
                        autocomplete="off"
-                       placeholder="Click or press 'S' to search, '?' for more options..."
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
                        type="search">
             </div>
         </form>
@@ -263,7 +264,62 @@
 <span id="221">221</span>
 <span id="222">222</span>
 <span id="223">223</span>
+<span id="224">224</span>
+<span id="225">225</span>
+<span id="226">226</span>
+<span id="227">227</span>
+<span id="228">228</span>
+<span id="229">229</span>
+<span id="230">230</span>
+<span id="231">231</span>
+<span id="232">232</span>
+<span id="233">233</span>
+<span id="234">234</span>
+<span id="235">235</span>
+<span id="236">236</span>
+<span id="237">237</span>
+<span id="238">238</span>
+<span id="239">239</span>
+<span id="240">240</span>
+<span id="241">241</span>
+<span id="242">242</span>
+<span id="243">243</span>
+<span id="244">244</span>
+<span id="245">245</span>
+<span id="246">246</span>
+<span id="247">247</span>
+<span id="248">248</span>
+<span id="249">249</span>
+<span id="250">250</span>
+<span id="251">251</span>
+<span id="252">252</span>
+<span id="253">253</span>
+<span id="254">254</span>
+<span id="255">255</span>
+<span id="256">256</span>
+<span id="257">257</span>
+<span id="258">258</span>
+<span id="259">259</span>
+<span id="260">260</span>
+<span id="261">261</span>
+<span id="262">262</span>
+<span id="263">263</span>
+<span id="264">264</span>
+<span id="265">265</span>
+<span id="266">266</span>
+<span id="267">267</span>
+<span id="268">268</span>
+<span id="269">269</span>
+<span id="270">270</span>
 </pre><pre class='rust '>
+<span class='comment'>// Copyright 2016 rust-punkt developers</span>
+<span class='comment'>//</span>
+<span class='comment'>// Licensed under the Apache License, Version 2.0 &lt;LICENSE-APACHE or</span>
+<span class='comment'>// http://www.apache.org/licenses/LICENSE-2.0&gt; or the MIT license</span>
+<span class='comment'>// &lt;LICENSE-MIT or http://opensource.org/licenses/MIT&gt;, at your</span>
+<span class='comment'>// option. This file may not be copied, modified, or distributed</span>
+<span class='comment'>// except according to those terms.</span>
+
 <span class='kw'>use</span> <span class='ident'>phf</span>;
 
 
@@ -277,7 +333,8 @@
   <span class='kw'>fn</span> <span class='ident'>sentence_endings</span>() <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;static</span> <span class='ident'>Set</span><span class='op'>&lt;</span><span class='ident'>char</span><span class='op'>&gt;</span>;
 
   <span class='doccomment'>/// Checks if a character is a sentence ending.</span>
-  <span class='attribute'>#[<span class='ident'>inline</span>(<span class='ident'>always</span>)]</span> <span class='kw'>fn</span> <span class='ident'>is_sentence_ending</span>(<span class='ident'>c</span>: <span class='kw-2'>&amp;</span><span class='ident'>char</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> { 
+  <span class='attribute'>#[<span class='ident'>inline</span>(<span class='ident'>always</span>)]</span>
+  <span class='kw'>fn</span> <span class='ident'>is_sentence_ending</span>(<span class='ident'>c</span>: <span class='kw-2'>&amp;</span><span class='ident'>char</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
     <span class='ident'>Self</span>::<span class='ident'>sentence_endings</span>().<span class='ident'>contains</span>(<span class='ident'>c</span>)
   }
 }
@@ -288,9 +345,10 @@
   <span class='doccomment'>/// The set of legal punctuation characters that can occur within a word.</span>
   <span class='kw'>fn</span> <span class='ident'>internal_punctuation</span>() <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;static</span> <span class='ident'>Set</span><span class='op'>&lt;</span><span class='ident'>char</span><span class='op'>&gt;</span>;
 
-  <span class='doccomment'>/// Checks if a character is a legal punctuation character that can occur </span>
+  <span class='doccomment'>/// Checks if a character is a legal punctuation character that can occur</span>
   <span class='doccomment'>/// within a word.</span>
-  <span class='attribute'>#[<span class='ident'>inline</span>(<span class='ident'>always</span>)]</span> <span class='kw'>fn</span> <span class='ident'>is_internal_punctuation</span>(<span class='ident'>c</span>: <span class='kw-2'>&amp;</span><span class='ident'>char</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
+  <span class='attribute'>#[<span class='ident'>inline</span>(<span class='ident'>always</span>)]</span>
+  <span class='kw'>fn</span> <span class='ident'>is_internal_punctuation</span>(<span class='ident'>c</span>: <span class='kw-2'>&amp;</span><span class='ident'>char</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
     <span class='ident'>Self</span>::<span class='ident'>internal_punctuation</span>().<span class='ident'>contains</span>(<span class='ident'>c</span>)
   }
 }
@@ -302,7 +360,8 @@
   <span class='kw'>fn</span> <span class='ident'>nonword_chars</span>() <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;static</span> <span class='ident'>Set</span><span class='op'>&lt;</span><span class='ident'>char</span><span class='op'>&gt;</span>;
 
   <span class='doccomment'>/// Checks if a character is one that can not occur inside of a word.</span>
-  <span class='attribute'>#[<span class='ident'>inline</span>(<span class='ident'>always</span>)]</span> <span class='kw'>fn</span> <span class='ident'>is_nonword_char</span>(<span class='ident'>c</span>: <span class='kw-2'>&amp;</span><span class='ident'>char</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
+  <span class='attribute'>#[<span class='ident'>inline</span>(<span class='ident'>always</span>)]</span>
+  <span class='kw'>fn</span> <span class='ident'>is_nonword_char</span>(<span class='ident'>c</span>: <span class='kw-2'>&amp;</span><span class='ident'>char</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
     <span class='ident'>Self</span>::<span class='ident'>nonword_chars</span>().<span class='ident'>contains</span>(<span class='ident'>c</span>)
   }
 }
@@ -314,7 +373,8 @@
   <span class='kw'>fn</span> <span class='ident'>punctuation</span>() <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;static</span> <span class='ident'>Set</span><span class='op'>&lt;</span><span class='ident'>char</span><span class='op'>&gt;</span>;
 
   <span class='doccomment'>/// Checks if a characters is a legal punctuation mark.</span>
-  <span class='attribute'>#[<span class='ident'>inline</span>(<span class='ident'>always</span>)]</span> <span class='kw'>fn</span> <span class='ident'>is_punctuation</span>(<span class='ident'>c</span>: <span class='kw-2'>&amp;</span><span class='ident'>char</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
+  <span class='attribute'>#[<span class='ident'>inline</span>(<span class='ident'>always</span>)]</span>
+  <span class='kw'>fn</span> <span class='ident'>is_punctuation</span>(<span class='ident'>c</span>: <span class='kw-2'>&amp;</span><span class='ident'>char</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
     <span class='ident'>Self</span>::<span class='ident'>punctuation</span>().<span class='ident'>contains</span>(<span class='ident'>c</span>)
   }
 }
@@ -323,10 +383,11 @@
 <span class='doccomment'>/// Defines a set of a characters that can not start a word.</span>
 <span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>DefinesNonPrefixCharacters</span> {
   <span class='doccomment'>/// The set of characters that can not start a word.</span>
-  <span class='kw'>fn</span> <span class='ident'>nonprefix_chars</span>() <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;static</span> <span class='ident'>Set</span><span class='op'>&lt;</span><span class='ident'>char</span><span class='op'>&gt;</span>; 
+  <span class='kw'>fn</span> <span class='ident'>nonprefix_chars</span>() <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;static</span> <span class='ident'>Set</span><span class='op'>&lt;</span><span class='ident'>char</span><span class='op'>&gt;</span>;
 
   <span class='doccomment'>/// Checks if a character can start a word.</span>
-  <span class='attribute'>#[<span class='ident'>inline</span>(<span class='ident'>always</span>)]</span> <span class='kw'>fn</span> <span class='ident'>is_nonprefix_char</span>(<span class='ident'>c</span>: <span class='kw-2'>&amp;</span><span class='ident'>char</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
+  <span class='attribute'>#[<span class='ident'>inline</span>(<span class='ident'>always</span>)]</span>
+  <span class='kw'>fn</span> <span class='ident'>is_nonprefix_char</span>(<span class='ident'>c</span>: <span class='kw-2'>&amp;</span><span class='ident'>char</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
     <span class='ident'>Self</span>::<span class='ident'>nonprefix_chars</span>().<span class='ident'>contains</span>(<span class='ident'>c</span>)
   }
 }
@@ -334,13 +395,13 @@
 
 <span class='doccomment'>/// Configurable parameters for a trainer.</span>
 <span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>TrainerParameters</span> : <span class='ident'>DefinesSentenceEndings</span> <span class='op'>+</span> <span class='ident'>DefinesInternalPunctuation</span> {
-  <span class='doccomment'>/// Lower bound score for a token to be considered an abbreviation. </span>
+  <span class='doccomment'>/// Lower bound score for a token to be considered an abbreviation.</span>
   <span class='kw'>fn</span> <span class='ident'>abbrev_lower_bound</span>() <span class='op'>-&gt;</span> <span class='ident'>f64</span>;
 
   <span class='doccomment'>/// Upper bound score for a token to be considered an abbreviation.</span>
   <span class='kw'>fn</span> <span class='ident'>abbrev_upper_bound</span>() <span class='op'>-&gt;</span> <span class='ident'>f64</span>;
 
-  <span class='doccomment'>/// Disables the abbreviation penalty which exponentially penalizes occurances </span>
+  <span class='doccomment'>/// Disables the abbreviation penalty which exponentially penalizes occurances</span>
   <span class='doccomment'>/// of words without a trailing period.</span>
   <span class='kw'>fn</span> <span class='ident'>ignore_abbrev_penalty</span>() <span class='op'>-&gt;</span> <span class='ident'>bool</span>;
 
@@ -353,96 +414,129 @@
   <span class='doccomment'>/// Include all pairs where the first token ends with a period.</span>
   <span class='kw'>fn</span> <span class='ident'>include_all_collocations</span>() <span class='op'>-&gt;</span> <span class='ident'>bool</span>;
 
-  <span class='doccomment'>/// Include all pairs where the first is an abbreviation. Overridden by </span>
+  <span class='doccomment'>/// Include all pairs where the first is an abbreviation. Overridden by</span>
   <span class='doccomment'>/// `include_all_collocations`.</span>
   <span class='kw'>fn</span> <span class='ident'>include_abbrev_collocations</span>() <span class='op'>-&gt;</span> <span class='ident'>bool</span>;
 
-  <span class='doccomment'>/// Minimum number of times a bigram appears in order to be considered a </span>
+  <span class='doccomment'>/// Minimum number of times a bigram appears in order to be considered a</span>
   <span class='doccomment'>/// collocation.</span>
   <span class='kw'>fn</span> <span class='ident'>collocation_frequency_lower_bound</span>() <span class='op'>-&gt;</span> <span class='ident'>f64</span>;
 }
 
 
-<span class='kw'>static</span> <span class='ident'>INTERNAL_PUNCT</span>  : <span class='ident'>Set</span><span class='op'>&lt;</span><span class='ident'>char</span><span class='op'>&gt;</span> <span class='op'>=</span> <span class='macro'>phf_set</span><span class='macro'>!</span>[<span class='string'>&#39;,&#39;</span>, <span class='string'>&#39;:&#39;</span>, <span class='string'>&#39;;&#39;</span>, <span class='string'>&#39;\u{2014}&#39;</span>];
+<span class='kw'>static</span> <span class='ident'>INTERNAL_PUNCT</span>: <span class='ident'>Set</span><span class='op'>&lt;</span><span class='ident'>char</span><span class='op'>&gt;</span> <span class='op'>=</span> <span class='macro'>phf_set</span><span class='macro'>!</span>[<span class='string'>&#39;,&#39;</span>, <span class='string'>&#39;:&#39;</span>, <span class='string'>&#39;;&#39;</span>, <span class='string'>&#39;\u{2014}&#39;</span>];
 <span class='kw'>static</span> <span class='ident'>SENTENCE_ENDINGS</span>: <span class='ident'>Set</span><span class='op'>&lt;</span><span class='ident'>char</span><span class='op'>&gt;</span> <span class='op'>=</span> <span class='macro'>phf_set</span><span class='macro'>!</span>[<span class='string'>&#39;.&#39;</span>, <span class='string'>&#39;?&#39;</span>, <span class='string'>&#39;!&#39;</span>];
-<span class='kw'>static</span> <span class='ident'>PUNCTUATION</span>     : <span class='ident'>Set</span><span class='op'>&lt;</span><span class='ident'>char</span><span class='op'>&gt;</span> <span class='op'>=</span> <span class='macro'>phf_set</span><span class='macro'>!</span>[<span class='string'>&#39;;&#39;</span>, <span class='string'>&#39;:&#39;</span>, <span class='string'>&#39;,&#39;</span>, <span class='string'>&#39;.&#39;</span>, <span class='string'>&#39;!&#39;</span>, <span class='string'>&#39;?&#39;</span>];
-<span class='kw'>static</span> <span class='ident'>NONWORD_CHARS</span>   : <span class='ident'>Set</span><span class='op'>&lt;</span><span class='ident'>char</span><span class='op'>&gt;</span> <span class='op'>=</span> <span class='macro'>phf_set</span><span class='macro'>!</span>[
-  <span class='string'>&#39;?&#39;</span>, <span class='string'>&#39;!&#39;</span>, <span class='string'>&#39;)&#39;</span>, <span class='string'>&#39;&quot;&#39;</span>, <span class='string'>&#39;;&#39;</span>, <span class='string'>&#39;}&#39;</span>, <span class='string'>&#39;]&#39;</span>, <span class='string'>&#39;*&#39;</span>, <span class='string'>&#39;:&#39;</span>, <span class='string'>&#39;@&#39;</span>, <span class='string'>&#39;\&#39;&#39;</span>, <span class='string'>&#39;(&#39;</span>, <span class='string'>&#39;{&#39;</span>, <span class='string'>&#39;[&#39;</span>
-];
-<span class='kw'>static</span> <span class='ident'>NONPREFIX_CHARS</span> : <span class='ident'>Set</span><span class='op'>&lt;</span><span class='ident'>char</span><span class='op'>&gt;</span> <span class='op'>=</span> <span class='macro'>phf_set</span><span class='macro'>!</span>[
-  <span class='string'>&#39;(&#39;</span>, <span class='string'>&#39;&quot;&#39;</span>, <span class='string'>&#39;`&#39;</span>, <span class='string'>&#39;{&#39;</span>, <span class='string'>&#39;[&#39;</span>, <span class='string'>&#39;:&#39;</span>, <span class='string'>&#39;;&#39;</span>, <span class='string'>&#39;&amp;&#39;</span>, <span class='string'>&#39;#&#39;</span>, <span class='string'>&#39;*&#39;</span>, <span class='string'>&#39;@&#39;</span>, <span class='string'>&#39;)&#39;</span>, <span class='string'>&#39;}&#39;</span>, <span class='string'>&#39;]&#39;</span>, <span class='string'>&#39;-&#39;</span>, <span class='string'>&#39;,&#39;</span>
-];
+<span class='kw'>static</span> <span class='ident'>PUNCTUATION</span>: <span class='ident'>Set</span><span class='op'>&lt;</span><span class='ident'>char</span><span class='op'>&gt;</span> <span class='op'>=</span> <span class='macro'>phf_set</span><span class='macro'>!</span>[<span class='string'>&#39;;&#39;</span>, <span class='string'>&#39;:&#39;</span>, <span class='string'>&#39;,&#39;</span>, <span class='string'>&#39;.&#39;</span>, <span class='string'>&#39;!&#39;</span>, <span class='string'>&#39;?&#39;</span>];
+<span class='kw'>static</span> <span class='ident'>NONWORD_CHARS</span>: <span class='ident'>Set</span><span class='op'>&lt;</span><span class='ident'>char</span><span class='op'>&gt;</span> <span class='op'>=</span> <span class='macro'>phf_set</span><span class='macro'>!</span>[<span class='string'>&#39;?&#39;</span>, <span class='string'>&#39;!&#39;</span>, <span class='string'>&#39;)&#39;</span>, <span class='string'>&#39;&quot;&#39;</span>, <span class='string'>&#39;;&#39;</span>, <span class='string'>&#39;}&#39;</span>, <span class='string'>&#39;]&#39;</span>, <span class='string'>&#39;*&#39;</span>, <span class='string'>&#39;:&#39;</span>, <span class='string'>&#39;@&#39;</span>, <span class='string'>&#39;\&#39;&#39;</span>,
+                                           <span class='string'>&#39;(&#39;</span>, <span class='string'>&#39;{&#39;</span>, <span class='string'>&#39;[&#39;</span>];
+<span class='kw'>static</span> <span class='ident'>NONPREFIX_CHARS</span>: <span class='ident'>Set</span><span class='op'>&lt;</span><span class='ident'>char</span><span class='op'>&gt;</span> <span class='op'>=</span> <span class='macro'>phf_set</span><span class='macro'>!</span>[<span class='string'>&#39;(&#39;</span>, <span class='string'>&#39;&quot;&#39;</span>, <span class='string'>&#39;`&#39;</span>, <span class='string'>&#39;{&#39;</span>, <span class='string'>&#39;[&#39;</span>, <span class='string'>&#39;:&#39;</span>, <span class='string'>&#39;;&#39;</span>, <span class='string'>&#39;&amp;&#39;</span>, <span class='string'>&#39;#&#39;</span>, <span class='string'>&#39;*&#39;</span>,
+                                             <span class='string'>&#39;@&#39;</span>, <span class='string'>&#39;)&#39;</span>, <span class='string'>&#39;}&#39;</span>, <span class='string'>&#39;]&#39;</span>, <span class='string'>&#39;-&#39;</span>, <span class='string'>&#39;,&#39;</span>];
 
 
-<span class='doccomment'>/// Mixin that will give the default implementations for </span>
-<span class='doccomment'>/// `DefinesSentenceEndings`, `DefinesInternalPunctuation`, </span>
+<span class='doccomment'>/// Mixin that will give the default implementations for</span>
+<span class='doccomment'>/// `DefinesSentenceEndings`, `DefinesInternalPunctuation`,</span>
 <span class='doccomment'>/// `DefinesNonWordCharacter`, `DefinesEndingPunctuation`,</span>
 <span class='doccomment'>/// and `DefinesNonPrefixCharacters`.</span>
 <span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>DefaultCharacterDefinitions</span> { }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> <span class='ident'>DefinesSentenceEndings</span> <span class='kw'>for</span> <span class='ident'>T</span> <span class='kw'>where</span> <span class='ident'>T</span> : <span class='ident'>DefaultCharacterDefinitions</span> {
-  <span class='attribute'>#[<span class='ident'>inline</span>(<span class='ident'>always</span>)]</span> <span class='kw'>fn</span> <span class='ident'>sentence_endings</span>() <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;static</span> <span class='ident'>Set</span><span class='op'>&lt;</span><span class='ident'>char</span><span class='op'>&gt;</span> { 
-    <span class='kw-2'>&amp;</span><span class='ident'>SENTENCE_ENDINGS</span> 
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> <span class='ident'>DefinesSentenceEndings</span> <span class='kw'>for</span> <span class='ident'>T</span> <span class='kw'>where</span> <span class='ident'>T</span>: <span class='ident'>DefaultCharacterDefinitions</span>
+{
+  <span class='attribute'>#[<span class='ident'>inline</span>(<span class='ident'>always</span>)]</span>
+  <span class='kw'>fn</span> <span class='ident'>sentence_endings</span>() <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;static</span> <span class='ident'>Set</span><span class='op'>&lt;</span><span class='ident'>char</span><span class='op'>&gt;</span> {
+    <span class='kw-2'>&amp;</span><span class='ident'>SENTENCE_ENDINGS</span>
   }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> <span class='ident'>DefinesInternalPunctuation</span> <span class='kw'>for</span> <span class='ident'>T</span> <span class='kw'>where</span> <span class='ident'>T</span> : <span class='ident'>DefaultCharacterDefinitions</span> {
-  <span class='attribute'>#[<span class='ident'>inline</span>(<span class='ident'>always</span>)]</span> <span class='kw'>fn</span> <span class='ident'>internal_punctuation</span>() <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;static</span> <span class='ident'>Set</span><span class='op'>&lt;</span><span class='ident'>char</span><span class='op'>&gt;</span> {
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> <span class='ident'>DefinesInternalPunctuation</span> <span class='kw'>for</span> <span class='ident'>T</span> <span class='kw'>where</span> <span class='ident'>T</span>: <span class='ident'>DefaultCharacterDefinitions</span>
+{
+  <span class='attribute'>#[<span class='ident'>inline</span>(<span class='ident'>always</span>)]</span>
+  <span class='kw'>fn</span> <span class='ident'>internal_punctuation</span>() <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;static</span> <span class='ident'>Set</span><span class='op'>&lt;</span><span class='ident'>char</span><span class='op'>&gt;</span> {
     <span class='kw-2'>&amp;</span><span class='ident'>INTERNAL_PUNCT</span>
   }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> <span class='ident'>DefinesNonWordCharacters</span> <span class='kw'>for</span> <span class='ident'>T</span> <span class='kw'>where</span> <span class='ident'>T</span> : <span class='ident'>DefaultCharacterDefinitions</span> {
-  <span class='attribute'>#[<span class='ident'>inline</span>(<span class='ident'>always</span>)]</span> <span class='kw'>fn</span> <span class='ident'>nonword_chars</span>() <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;static</span> <span class='ident'>Set</span><span class='op'>&lt;</span><span class='ident'>char</span><span class='op'>&gt;</span> {
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> <span class='ident'>DefinesNonWordCharacters</span> <span class='kw'>for</span> <span class='ident'>T</span> <span class='kw'>where</span> <span class='ident'>T</span>: <span class='ident'>DefaultCharacterDefinitions</span>
+{
+  <span class='attribute'>#[<span class='ident'>inline</span>(<span class='ident'>always</span>)]</span>
+  <span class='kw'>fn</span> <span class='ident'>nonword_chars</span>() <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;static</span> <span class='ident'>Set</span><span class='op'>&lt;</span><span class='ident'>char</span><span class='op'>&gt;</span> {
     <span class='kw-2'>&amp;</span><span class='ident'>NONWORD_CHARS</span>
   }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> <span class='ident'>DefinesPunctuation</span> <span class='kw'>for</span> <span class='ident'>T</span> <span class='kw'>where</span> <span class='ident'>T</span> : <span class='ident'>DefaultCharacterDefinitions</span> {
-  <span class='attribute'>#[<span class='ident'>inline</span>(<span class='ident'>always</span>)]</span> <span class='kw'>fn</span> <span class='ident'>punctuation</span>() <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;static</span> <span class='ident'>Set</span><span class='op'>&lt;</span><span class='ident'>char</span><span class='op'>&gt;</span> {
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> <span class='ident'>DefinesPunctuation</span> <span class='kw'>for</span> <span class='ident'>T</span> <span class='kw'>where</span> <span class='ident'>T</span>: <span class='ident'>DefaultCharacterDefinitions</span>
+{
+  <span class='attribute'>#[<span class='ident'>inline</span>(<span class='ident'>always</span>)]</span>
+  <span class='kw'>fn</span> <span class='ident'>punctuation</span>() <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;static</span> <span class='ident'>Set</span><span class='op'>&lt;</span><span class='ident'>char</span><span class='op'>&gt;</span> {
     <span class='kw-2'>&amp;</span><span class='ident'>PUNCTUATION</span>
   }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> <span class='ident'>DefinesNonPrefixCharacters</span> <span class='kw'>for</span> <span class='ident'>T</span> <span class='kw'>where</span> <span class='ident'>T</span> : <span class='ident'>DefaultCharacterDefinitions</span> {
-  <span class='attribute'>#[<span class='ident'>inline</span>(<span class='ident'>always</span>)]</span> <span class='kw'>fn</span> <span class='ident'>nonprefix_chars</span>() <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;static</span> <span class='ident'>Set</span><span class='op'>&lt;</span><span class='ident'>char</span><span class='op'>&gt;</span> {
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> <span class='ident'>DefinesNonPrefixCharacters</span> <span class='kw'>for</span> <span class='ident'>T</span> <span class='kw'>where</span> <span class='ident'>T</span>: <span class='ident'>DefaultCharacterDefinitions</span>
+{
+  <span class='attribute'>#[<span class='ident'>inline</span>(<span class='ident'>always</span>)]</span>
+  <span class='kw'>fn</span> <span class='ident'>nonprefix_chars</span>() <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;static</span> <span class='ident'>Set</span><span class='op'>&lt;</span><span class='ident'>char</span><span class='op'>&gt;</span> {
     <span class='kw-2'>&amp;</span><span class='ident'>NONPREFIX_CHARS</span>
   }
 }
 
 
-<span class='doccomment'>/// Default settings for all tokenizers, and trainers.</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Default</span>;
+<span class='doccomment'>/// Standard settings for all tokenizers, and trainers.</span>
+<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Standard</span>;
 
-<span class='kw'>impl</span> <span class='ident'>DefaultCharacterDefinitions</span> <span class='kw'>for</span> <span class='ident'>Default</span> { }
+<span class='kw'>impl</span> <span class='ident'>DefaultCharacterDefinitions</span> <span class='kw'>for</span> <span class='ident'>Standard</span> {}
 
-<span class='kw'>impl</span> <span class='ident'>TrainerParameters</span> <span class='kw'>for</span> <span class='ident'>Default</span> {
-  <span class='attribute'>#[<span class='ident'>inline</span>(<span class='ident'>always</span>)]</span> <span class='kw'>fn</span> <span class='ident'>abbrev_lower_bound</span>() <span class='op'>-&gt;</span> <span class='ident'>f64</span> { <span class='number'>0.3</span> }
-  <span class='attribute'>#[<span class='ident'>inline</span>(<span class='ident'>always</span>)]</span> <span class='kw'>fn</span> <span class='ident'>abbrev_upper_bound</span>() <span class='op'>-&gt;</span> <span class='ident'>f64</span> { <span class='number'>5f64</span> }
-  <span class='attribute'>#[<span class='ident'>inline</span>(<span class='ident'>always</span>)]</span> <span class='kw'>fn</span> <span class='ident'>ignore_abbrev_penalty</span>() <span class='op'>-&gt;</span> <span class='ident'>bool</span> { <span class='boolval'>false</span> }
-  <span class='attribute'>#[<span class='ident'>inline</span>(<span class='ident'>always</span>)]</span> <span class='kw'>fn</span> <span class='ident'>collocation_lower_bound</span>() <span class='op'>-&gt;</span> <span class='ident'>f64</span> { <span class='number'>7.88</span> }
-  <span class='attribute'>#[<span class='ident'>inline</span>(<span class='ident'>always</span>)]</span> <span class='kw'>fn</span> <span class='ident'>sentence_starter_lower_bound</span>() <span class='op'>-&gt;</span> <span class='ident'>f64</span> { <span class='number'>30f64</span> }
-  <span class='attribute'>#[<span class='ident'>inline</span>(<span class='ident'>always</span>)]</span> <span class='kw'>fn</span> <span class='ident'>include_all_collocations</span>() <span class='op'>-&gt;</span> <span class='ident'>bool</span> { <span class='boolval'>false</span> }
-  <span class='attribute'>#[<span class='ident'>inline</span>(<span class='ident'>always</span>)]</span> <span class='kw'>fn</span> <span class='ident'>include_abbrev_collocations</span>() <span class='op'>-&gt;</span> <span class='ident'>bool</span> { <span class='boolval'>false</span> }
-  <span class='attribute'>#[<span class='ident'>inline</span>(<span class='ident'>always</span>)]</span> <span class='kw'>fn</span> <span class='ident'>collocation_frequency_lower_bound</span>() <span class='op'>-&gt;</span> <span class='ident'>f64</span> { <span class='number'>1f64</span> }
+<span class='kw'>impl</span> <span class='ident'>TrainerParameters</span> <span class='kw'>for</span> <span class='ident'>Standard</span> {
+  <span class='attribute'>#[<span class='ident'>inline</span>(<span class='ident'>always</span>)]</span>
+  <span class='kw'>fn</span> <span class='ident'>abbrev_lower_bound</span>() <span class='op'>-&gt;</span> <span class='ident'>f64</span> {
+    <span class='number'>0.3</span>
+  }
+  <span class='attribute'>#[<span class='ident'>inline</span>(<span class='ident'>always</span>)]</span>
+  <span class='kw'>fn</span> <span class='ident'>abbrev_upper_bound</span>() <span class='op'>-&gt;</span> <span class='ident'>f64</span> {
+    <span class='number'>5f64</span>
+  }
+  <span class='attribute'>#[<span class='ident'>inline</span>(<span class='ident'>always</span>)]</span>
+  <span class='kw'>fn</span> <span class='ident'>ignore_abbrev_penalty</span>() <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
+    <span class='boolval'>false</span>
+  }
+  <span class='attribute'>#[<span class='ident'>inline</span>(<span class='ident'>always</span>)]</span>
+  <span class='kw'>fn</span> <span class='ident'>collocation_lower_bound</span>() <span class='op'>-&gt;</span> <span class='ident'>f64</span> {
+    <span class='number'>7.88</span>
+  }
+  <span class='attribute'>#[<span class='ident'>inline</span>(<span class='ident'>always</span>)]</span>
+  <span class='kw'>fn</span> <span class='ident'>sentence_starter_lower_bound</span>() <span class='op'>-&gt;</span> <span class='ident'>f64</span> {
+    <span class='number'>30f64</span>
+  }
+  <span class='attribute'>#[<span class='ident'>inline</span>(<span class='ident'>always</span>)]</span>
+  <span class='kw'>fn</span> <span class='ident'>include_all_collocations</span>() <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
+    <span class='boolval'>false</span>
+  }
+  <span class='attribute'>#[<span class='ident'>inline</span>(<span class='ident'>always</span>)]</span>
+  <span class='kw'>fn</span> <span class='ident'>include_abbrev_collocations</span>() <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
+    <span class='boolval'>false</span>
+  }
+  <span class='attribute'>#[<span class='ident'>inline</span>(<span class='ident'>always</span>)]</span>
+  <span class='kw'>fn</span> <span class='ident'>collocation_frequency_lower_bound</span>() <span class='op'>-&gt;</span> <span class='ident'>f64</span> {
+    <span class='number'>1f64</span>
+  }
 }
 
 
 <span class='kw'>pub</span> <span class='kw'>type</span> <span class='ident'>OrthographicContext</span> <span class='op'>=</span> <span class='ident'>u8</span>;
 
 
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>PartialEq</span>, <span class='ident'>Eq</span>)]</span> <span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>OrthographyPosition</span> {
+<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>PartialEq</span>, <span class='ident'>Eq</span>)]</span>
+<span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>OrthographyPosition</span> {
   <span class='ident'>Initial</span>,
   <span class='ident'>Internal</span>,
-  <span class='ident'>Unknown</span>
+  <span class='ident'>Unknown</span>,
 }
 
 <span class='kw'>impl</span> <span class='ident'>OrthographyPosition</span> {
   <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>as_byte</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>u8</span> {
     <span class='kw'>match</span> <span class='op'>*</span><span class='self'>self</span> {
-      <span class='ident'>OrthographyPosition</span>::<span class='ident'>Initial</span>   <span class='op'>=&gt;</span> <span class='number'>0b01000000</span>,
-      <span class='ident'>OrthographyPosition</span>::<span class='ident'>Internal</span>  <span class='op'>=&gt;</span> <span class='number'>0b00100000</span>,
-      <span class='ident'>OrthographyPosition</span>::<span class='ident'>Unknown</span>   <span class='op'>=&gt;</span> <span class='number'>0b01100000</span>
+      <span class='ident'>OrthographyPosition</span>::<span class='ident'>Initial</span> <span class='op'>=&gt;</span> <span class='number'>0b01000000</span>,
+      <span class='ident'>OrthographyPosition</span>::<span class='ident'>Internal</span> <span class='op'>=&gt;</span> <span class='number'>0b00100000</span>,
+      <span class='ident'>OrthographyPosition</span>::<span class='ident'>Unknown</span> <span class='op'>=&gt;</span> <span class='number'>0b01100000</span>,
     }
   }
 }
@@ -454,13 +548,13 @@
 <span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>BEG_LC</span>: <span class='ident'>OrthographicContext</span> <span class='op'>=</span> <span class='number'>0b00010000</span>;
 <span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>MID_LC</span>: <span class='ident'>OrthographicContext</span> <span class='op'>=</span> <span class='number'>0b00100000</span>;
 <span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>UNK_LC</span>: <span class='ident'>OrthographicContext</span> <span class='op'>=</span> <span class='number'>0b01000000</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>ORT_UC</span>: <span class='ident'>OrthographicContext</span> <span class='op'>=</span> <span class='ident'>BEG_UC</span> <span class='op'>|</span> <span class='ident'>MID_UC</span> <span class='op'>|</span> <span class='ident'>UNK_UC</span>; 
+<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>ORT_UC</span>: <span class='ident'>OrthographicContext</span> <span class='op'>=</span> <span class='ident'>BEG_UC</span> <span class='op'>|</span> <span class='ident'>MID_UC</span> <span class='op'>|</span> <span class='ident'>UNK_UC</span>;
 <span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>ORT_LC</span>: <span class='ident'>OrthographicContext</span> <span class='op'>=</span> <span class='ident'>BEG_LC</span> <span class='op'>|</span> <span class='ident'>MID_LC</span> <span class='op'>|</span> <span class='ident'>UNK_LC</span>;
 
 
-<span class='doccomment'>/// Map relating a combination of LetterCase and OrthographyPosition </span>
-<span class='doccomment'>/// to an OrthographicConstant describing orthographic attributes about the </span>
-<span class='doccomment'>/// token. The chars (in ASCII) map to the result of ORing the byte </span>
+<span class='doccomment'>/// Map relating a combination of LetterCase and OrthographyPosition</span>
+<span class='doccomment'>/// to an OrthographicConstant describing orthographic attributes about the</span>
+<span class='doccomment'>/// token. The chars (in ASCII) map to the result of ORing the byte</span>
 <span class='doccomment'>/// representation of an OrthographyPosition and LetterCase together.</span>
 <span class='kw'>pub</span> <span class='kw'>static</span> <span class='ident'>ORTHO_MAP</span>: <span class='ident'>phf</span>::<span class='ident'>Map</span><span class='op'>&lt;</span><span class='ident'>u8</span>, <span class='ident'>OrthographicContext</span><span class='op'>&gt;</span> <span class='op'>=</span> <span class='macro'>phf_map</span><span class='macro'>!</span> {
   <span class='string'>b&#39;B&#39;</span> <span class='op'>=&gt;</span> <span class='ident'>BEG_UC</span>, <span class='comment'>// 66</span>
@@ -479,11 +573,12 @@
 }
 
 <span class='kw'>impl</span> <span class='ident'>LetterCase</span> {
-  <span class='attribute'>#[<span class='ident'>inline</span>(<span class='ident'>always</span>)]</span> <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>as_byte</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>u8</span> {
+  <span class='attribute'>#[<span class='ident'>inline</span>(<span class='ident'>always</span>)]</span>
+  <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>as_byte</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>u8</span> {
     <span class='kw'>match</span> <span class='op'>*</span><span class='self'>self</span> {
-      <span class='ident'>LetterCase</span>::<span class='ident'>Upper</span>   <span class='op'>=&gt;</span> <span class='number'>0b00000010</span>,
-      <span class='ident'>LetterCase</span>::<span class='ident'>Lower</span>   <span class='op'>=&gt;</span> <span class='number'>0b00000001</span>,
-      <span class='ident'>LetterCase</span>::<span class='ident'>Unknown</span> <span class='op'>=&gt;</span> <span class='number'>0b00000011</span>
+      <span class='ident'>LetterCase</span>::<span class='ident'>Upper</span> <span class='op'>=&gt;</span> <span class='number'>0b00000010</span>,
+      <span class='ident'>LetterCase</span>::<span class='ident'>Lower</span> <span class='op'>=&gt;</span> <span class='number'>0b00000001</span>,
+      <span class='ident'>LetterCase</span>::<span class='ident'>Unknown</span> <span class='op'>=&gt;</span> <span class='number'>0b00000011</span>,
     }
   }
 }
@@ -493,40 +588,49 @@
 
     <section class="footer"></section>
 
-    <div id="help" class="hidden">
-        <div class="shortcuts">
-            <h1>Keyboard shortcuts</h1>
-            <dl>
-                <dt>?</dt>
-                <dd>Show this help dialog</dd>
-                <dt>S</dt>
-                <dd>Focus the search field</dd>
-                <dt>&larrb;</dt>
-                <dd>Move up in search results</dd>
-                <dt>&rarrb;</dt>
-                <dd>Move down in search results</dd>
-                <dt>&#9166;</dt>
-                <dd>Go to active search result</dd>
-            </dl>
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code>)
+                </p>
+            </div>
         </div>
-        <div class="infos">
-            <h1>Search tricks</h1>
-            <p>
-                Prefix searches with a type followed by a colon (e.g.
-                <code>fn:</code>) to restrict the search to a given type.
-            </p>
-            <p>
-                Accepted types are: <code>fn</code>, <code>mod</code>,
-                <code>struct</code>, <code>enum</code>,
-                <code>trait</code>, <code>typedef</code> (or
-                <code>tdef</code>).
-            </p>
-            <p>
-                Search functions by type signature (e.g.
-                <code>vec -> usize</code>)
-            </p>
-        </div>
-    </div>
+    </aside>
 
     
 
@@ -538,6 +642,6 @@
     <script src="../../jquery.js"></script>
     <script src="../../main.js"></script>
     
-    <script async src="../../search-index.js"></script>
+    <script defer src="../../search-index.js"></script>
 </body>
 </html>
