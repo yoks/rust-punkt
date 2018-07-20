@@ -12,6 +12,43 @@ use trainer::TrainingData;
 
 use num::Float;
 
+/// Counts macro argument repetitions from a token tree
+macro_rules! count_repetitions {
+    () => (
+        0usize
+    );
+    ($head:tt) => (
+        1usize
+    );
+    ($head:tt $($tail:tt)+) => (
+        1usize + count_repetitions!($($tail)+)
+    )
+}
+
+/// Creates a hashset with elements
+macro_rules! hashset {
+    ($($element:expr),*) => [{
+        use std::collections::HashSet;
+        let mut set = HashSet::with_capacity(count_repetitions!($($element)*));
+        $(
+            set.insert($element);
+         )*
+        set
+    }]
+}
+
+/// Creates a hashmap with element => value mappings
+macro_rules! hashmap {
+    ($($key:expr => $value:expr),*) => [{
+        use std::collections::HashMap;
+        let mut set = HashMap::with_capacity(count_repetitions!($($key)*));
+        $(
+            set.insert($key, $value);
+         )*
+        set
+    }]
+}
+
 /// Peforms a first pass annotation on a Token.
 pub fn annotate_first_pass<P: DefinesSentenceEndings>(tok: &mut Token, data: &TrainingData) {
   let is_split_abbrev = tok

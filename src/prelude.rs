@@ -5,41 +5,6 @@
 // <LICENSE-MIT or http://opensource.org/licenses/MIT>, at your
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
-
-macro_rules! count_repetitions {
-    () => (
-        0usize
-    );
-    ($head:tt) => (
-        1usize
-    );
-    ($head:tt $($tail:tt)+) => (
-        1usize + count_repetitions!($($tail)+)
-    )
-}
-
-macro_rules! hashset {
-    ($($element:expr),*) => [{
-        use std::collections::HashSet;
-        let mut set = HashSet::with_capacity(count_repetitions!($($element)*));
-        $(
-            set.insert($element);
-         )*
-        set
-    }]
-}
-
-macro_rules! hashmap {
-    ($($key:expr => $value:expr),*) => [{
-        use std::collections::HashMap;
-        let mut set = HashMap::with_capacity(count_repetitions!($($key)*));
-        $(
-            set.insert($key, $value);
-         )*
-        set
-    }]
-}
-
 use std::collections::{HashMap, HashSet};
 
 /// The set of characters that constitute a sentence ending.
@@ -49,10 +14,15 @@ lazy_static! {
 
 /// Defines a set of punctuation that can end a sentence.
 pub trait DefinesSentenceEndings {
+  /// The set of characters that constitute a sentence ending.
+  #[inline]
+  fn get_chars() -> &'static HashSet<char> {
+      &SENTENCE_ENDINGS
+  }
   /// Checks if a character is a sentence ending.
   #[inline]
   fn is_sentence_ending(c: &char) -> bool {
-    SENTENCE_ENDINGS.contains(c)
+    Self::get_chars().contains(c)
   }
 }
 
@@ -63,11 +33,16 @@ lazy_static! {
 
 /// Defines a set of punctuation that can occur within a word.
 pub trait DefinesInternalPunctuation {
+  /// The set of legal punctuation characters that can occur within a word.
+  #[inline]
+  fn get_chars() -> &'static HashSet<char> {
+      &INTERNAL_PUNCTUATION
+  }
   /// Checks if a character is a legal punctuation character that can occur
   /// within a word.
   #[inline]
   fn is_internal_punctuation(c: &char) -> bool {
-    INTERNAL_PUNCTUATION.contains(c)
+    Self::get_chars().contains(c)
   }
 }
 
@@ -80,10 +55,15 @@ lazy_static! {
 
 /// Defines a set of characters that can not occur inside of a word.
 pub trait DefinesNonWordCharacters {
+  /// The set of characters that can not occur inside of a word.
+  #[inline]
+  fn get_chars() -> &'static HashSet<char> {
+      &NONWORD_CHARS
+  }
   /// Checks if a character is one that can not occur inside of a word.
   #[inline]
   fn is_nonword_char(c: &char) -> bool {
-    NONWORD_CHARS.contains(c)
+    Self::get_chars().contains(c)
   }
 }
 
@@ -94,10 +74,15 @@ lazy_static! {
 
 /// Defines punctuation that can occur within a sentence.
 pub trait DefinesPunctuation {
+  /// The set of legal punctuation marks.
+  #[inline]
+  fn get_chars() -> &'static HashSet<char> {
+      &PUNCTUATION
+  }
   /// Checks if a characters is a legal punctuation mark.
   #[inline]
   fn is_punctuation(c: &char) -> bool {
-    PUNCTUATION.contains(c)
+    Self::get_chars().contains(c)
   }
 }
 
@@ -110,10 +95,15 @@ lazy_static! {
 
 /// Defines a set of a characters that can not start a word.
 pub trait DefinesNonPrefixCharacters {
+  /// The set of characters that can not start a word.
+  #[inline]
+  fn get_chars() -> &'static HashSet<char> {
+      &NONPREFIX_CHARS
+  }
   /// Checks if a character can start a word.
   #[inline]
   fn is_nonprefix_char(c: &char) -> bool {
-    NONPREFIX_CHARS.contains(c)
+    Self::get_chars().contains(c)
   }
 }
 

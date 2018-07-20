@@ -1,14 +1,51 @@
+#[macro_use]
+extern crate lazy_static;
 extern crate punkt_stable;
+
+use std::collections::HashSet;
 
 use punkt_stable::params::*;
 use punkt_stable::{SentenceTokenizer, Trainer, TrainingData};
 
 struct MyParams;
 
-// TODO: Custom parameters unsupported at the moment
+/// Counts macro argument repetitions from a token tree
+macro_rules! count_repetitions {
+    () => (
+        0usize
+    );
+    ($head:tt) => (
+        1usize
+    );
+    ($head:tt $($tail:tt)+) => (
+        1usize + count_repetitions!($($tail)+)
+    )
+}
+
+/// Creates a hashset with elements
+macro_rules! hashset {
+    ($($element:expr),*) => [{
+        use std::collections::HashSet;
+        let mut set = HashSet::with_capacity(count_repetitions!($($element)*));
+        $(
+            set.insert($element);
+         )*
+        set
+    }]
+}
+
 impl DefinesInternalPunctuation for MyParams {}
 impl DefinesNonPrefixCharacters for MyParams {}
-impl DefinesNonWordCharacters for MyParams {}
+
+lazy_static! {
+    static ref NONWORD_CHARS: HashSet<char> = hashset!['?', '!', ')', '"', ';', '}', ']', '*', ':', '@', '\'', '(', '{', '[', '\u{201c}', '\u{201d}'];
+}
+
+impl DefinesNonWordCharacters for MyParams {
+    fn get_chars() -> &'static HashSet<char> {
+        &NONWORD_CHARS
+    }
+}
 impl DefinesPunctuation for MyParams {}
 impl DefinesSentenceEndings for MyParams {}
 

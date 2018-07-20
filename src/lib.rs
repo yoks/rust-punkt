@@ -150,11 +150,12 @@ extern crate test;
 #[cfg(test)]
 extern crate walkdir;
 
+#[macro_use]
+mod util;
 mod prelude;
 mod token;
 mod tokenizer;
 mod trainer;
-mod util;
 
 pub use tokenizer::{SentenceByteOffsetTokenizer, SentenceTokenizer};
 pub use trainer::{Trainer, TrainingData};
