@@ -24,8 +24,8 @@
 //! sentence tokenization from the document itself.
 //!
 //! ```
-//! # use punkt::params::Standard;
-//! # use punkt::{Trainer, TrainingData, SentenceTokenizer};
+//! # use punkt_stable::params::Standard;
+//! # use punkt_stable::{Trainer, TrainingData, SentenceTokenizer};
 //! #
 //! # let doc = "I bought $5.50 worth of apples from the store. I gave them to my dog when I came home.";
 //! let trainer: Trainer<Standard> = Trainer::new();
@@ -43,7 +43,7 @@
 //! ```
 //! # #![allow(unused_variables)]
 //! #
-//! # use punkt::TrainingData;
+//! # use punkt_stable::TrainingData;
 //! #
 //! let data = TrainingData::english();
 //! ```
@@ -51,8 +51,8 @@
 //! `rust-punkt` also allows training data to be incrementally gathered.
 //!
 //! ```
-//! # use punkt::params::Standard;
-//! # use punkt::{Trainer, TrainingData, SentenceTokenizer};
+//! # use punkt_stable::params::Standard;
+//! # use punkt_stable::{Trainer, TrainingData, SentenceTokenizer};
 //! #
 //! # let docs = ["This is a sentence with a abbrev. in it."];
 //! let trainer: Trainer<Standard> = Trainer::new();
@@ -71,12 +71,12 @@
 //!
 //! `rust-punkt` exposes a number of traits to customize how the trainer, sentence tokenizer,
 //! and internal tokenizers work. The default settings, which are nearly identical, to the
-//! ones available in the Python library are available in `punkt::params::Standard`.
+//! ones available in the Python library are available in `punkt_stable::params::Standard`.
 //!
 //! To modify only how the trainer works:
 //!
 //! ```
-//! # use punkt::params::*;
+//! # use punkt_stable::params::*;
 //! #
 //! struct MyParams;
 //!
@@ -101,7 +101,7 @@
 //! To fully modify how everything works:
 //!
 //! ```
-//! # use punkt::params::*;
+//! # use punkt_stable::params::*;
 //! #
 //! struct MyParams;
 //!
@@ -137,34 +137,33 @@
 //! }
 //! ```
 
-#![feature(plugin)]
-#![cfg_attr(test, feature(test))]
-#![plugin(phf_macros)]
 #![warn(missing_docs)]
+#![cfg_attr(test, feature(test))]
 
+#[macro_use]
+extern crate lazy_static;
 extern crate freqdist;
 extern crate num;
-extern crate phf;
 extern crate rustc_serialize;
 #[cfg(test)]
 extern crate test;
 #[cfg(test)]
 extern crate walkdir;
 
-mod trainer;
-mod util;
+mod prelude;
 mod token;
 mod tokenizer;
-mod prelude;
+mod trainer;
+mod util;
 
-pub use trainer::{Trainer, TrainingData};
 pub use tokenizer::{SentenceByteOffsetTokenizer, SentenceTokenizer};
+pub use trainer::{Trainer, TrainingData};
 
 /// Contains traits for configuring all tokenizers, and the trainer. Also
 /// contains default parameters for tokenizers, and the trainer.
 pub mod params {
   pub use prelude::{DefinesInternalPunctuation, DefinesNonPrefixCharacters,
-                    DefinesNonWordCharacters, DefinesPunctuation, DefinesSentenceEndings, Set,
+                    DefinesNonWordCharacters, DefinesPunctuation, DefinesSentenceEndings,
                     Standard, TrainerParameters};
 }
 
@@ -173,8 +172,8 @@ fn get_test_scenarios(dir_path: &str, raw_path: &str) -> Vec<(Vec<String>, Strin
   #![allow(unused_must_use)]
 
   use std::fs;
-  use std::path::Path;
   use std::io::Read;
+  use std::path::Path;
 
   use walkdir::WalkDir;
 

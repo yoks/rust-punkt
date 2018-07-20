@@ -8,10 +8,10 @@
 
 use std::marker::PhantomData;
 
-use token::Token;
-use trainer::TrainingData;
 use prelude::{DefinesNonPrefixCharacters, DefinesNonWordCharacters, DefinesPunctuation,
               DefinesSentenceEndings};
+use token::Token;
+use trainer::TrainingData;
 
 const STATE_SENT_END: u8 = 0b00000001; // Hit a sentence end state.
 const STATE_TOKN_BEG: u8 = 0b00000010; // Token began state.
@@ -337,8 +337,8 @@ where
 /// # Examples
 ///
 /// ```
-/// # use punkt::{SentenceByteOffsetTokenizer, TrainingData};
-/// # use punkt::params::Standard;
+/// # use punkt_stable::{SentenceByteOffsetTokenizer, TrainingData};
+/// # use punkt_stable::params::Standard;
 /// #
 /// let doc = "this is a great sentence! this is a sad sentence.";
 /// let data = TrainingData::english();
@@ -445,8 +445,8 @@ where
 /// # Examples
 ///
 /// ```
-/// # use punkt::{SentenceTokenizer, TrainingData};
-/// # use punkt::params::Standard;
+/// # use punkt_stable::{SentenceTokenizer, TrainingData};
+/// # use punkt_stable::params::Standard;
 /// #
 /// let doc = "this is a great sentence! this is a sad sentence.";
 /// let data = TrainingData::english();
@@ -613,8 +613,8 @@ fn is_multi_char(doc: &str, start: usize) -> Option<&str> {
 
 #[test]
 fn periodctxt_tokenizer_compare_nltk() {
-  use std::iter::Iterator;
   use prelude::Standard;
+  use std::iter::Iterator;
 
   for (expected, raw, file) in super::get_test_scenarios("test/word-periodctxt/", "test/raw/") {
     let iter: PeriodContextTokenizer<Standard> = PeriodContextTokenizer::new(&raw[..]);

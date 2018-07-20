@@ -1,21 +1,14 @@
-#![feature(plugin)]
-#![plugin(phf_macros)]
+extern crate punkt_stable;
 
-extern crate phf;
-extern crate punkt;
-
-use punkt::params::*;
-use punkt::{SentenceTokenizer, Trainer, TrainingData};
+use punkt_stable::params::*;
+use punkt_stable::{SentenceTokenizer, Trainer, TrainingData};
 
 struct MyParams;
 
+// TODO: Custom parameters unsupported at the moment
 impl DefinesInternalPunctuation for MyParams {}
 impl DefinesNonPrefixCharacters for MyParams {}
-impl DefinesNonWordCharacters for MyParams {
-  const NONWORD_CHARS: &'static Set<char> = &phf_set![
-    '?', '!', ')', '"', ';', '}', ']', '*', ':', '@', '\'', '(', '{', '[', '\u{201c}', '\u{201d}'
-  ];
-}
+impl DefinesNonWordCharacters for MyParams {}
 impl DefinesPunctuation for MyParams {}
 impl DefinesSentenceEndings for MyParams {}
 

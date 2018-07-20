@@ -7,21 +7,21 @@
 // except according to those terms.
 
 use std::cmp::min;
-use std::ops::Deref;
-use std::str::FromStr;
+use std::collections::{HashMap, HashSet};
 use std::default::Default;
 use std::hash::{Hash, Hasher};
 use std::marker::PhantomData;
-use std::collections::{HashMap, HashSet};
+use std::ops::Deref;
+use std::str::FromStr;
 
 use freqdist::FrequencyDistribution;
 use rustc_serialize::json::Json;
 
-use util;
-use token::Token;
-use tokenizer::WordTokenizer;
 use prelude::{DefinesNonPrefixCharacters, DefinesNonWordCharacters, OrthographicContext,
               OrthographyPosition, TrainerParameters};
+use token::Token;
+use tokenizer::WordTokenizer;
+use util;
 
 /// A collocation is any pair of words that has a high likelihood of appearing
 /// together.
@@ -86,7 +86,7 @@ where
 /// Precompiled data can be loaded via a language specific constructor.
 ///
 /// ```
-/// # use punkt::TrainingData;
+/// # use punkt_stable::TrainingData;
 /// #
 /// let eng_data = TrainingData::english();
 /// let ger_data = TrainingData::german();

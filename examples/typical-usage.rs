@@ -1,7 +1,7 @@
-extern crate punkt;
+extern crate punkt_stable;
 
-use punkt::{SentenceTokenizer, Trainer, TrainingData};
-use punkt::params::Standard;
+use punkt_stable::params::Standard;
+use punkt_stable::{SentenceTokenizer, Trainer, TrainingData};
 
 fn main() {
   let docs = [

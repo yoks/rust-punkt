@@ -6,9 +6,9 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
+use prelude::DefinesSentenceEndings;
 use token::Token;
 use trainer::TrainingData;
-use prelude::DefinesSentenceEndings;
 
 use num::Float;
 
