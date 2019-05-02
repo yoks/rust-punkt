@@ -119,7 +119,7 @@ impl TrainingData {
 
   /// Insert a newly learned abbreviation.
   #[inline]
-  fn insert_abbrev(&mut self, tok: &str) -> bool {
+  pub fn insert_abbrev(&mut self, tok: &str) -> bool {
     if !self.contains_abbrev(tok) {
       self.abbrevs.insert(tok.to_lowercase())
     } else {
@@ -129,7 +129,7 @@ impl TrainingData {
 
   /// Removes a learned abbreviation.
   #[inline]
-  fn remove_abbrev(&mut self, tok: &str) -> bool {
+  pub fn remove_abbrev(&mut self, tok: &str) -> bool {
     self.abbrevs.remove(tok)
   }
 
@@ -142,7 +142,7 @@ impl TrainingData {
 
   /// Insert a newly learned word that signifies the start of a sentence.
   #[inline]
-  fn insert_sentence_starter(&mut self, tok: &str) -> bool {
+  pub fn insert_sentence_starter(&mut self, tok: &str) -> bool {
     if !self.contains_sentence_starter(tok) {
       self.sentence_starters.insert(tok.to_string())
     } else {
@@ -161,7 +161,7 @@ impl TrainingData {
   }
 
   /// Insert a newly learned pair of words that frequently appear together.
-  fn insert_collocation(&mut self, left: &str, right: &str) -> bool {
+  pub fn insert_collocation(&mut self, left: &str, right: &str) -> bool {
     if !self.collocations.contains_key(left) {
       self.collocations.insert(left.to_string(), HashSet::new());
     }
@@ -181,7 +181,7 @@ impl TrainingData {
   /// Insert or update the known orthographic context that a word commonly
   /// appears in.
   #[inline]
-  fn insert_orthographic_context(&mut self, tok: &str, ctxt: OrthographicContext) -> bool {
+  pub fn insert_orthographic_context(&mut self, tok: &str, ctxt: OrthographicContext) -> bool {
     // `get_mut` isn't allowed here, without adding an unnecessary lifetime
     // qualifier to `tok`.
     match self.orthographic_context.get_mut(tok) {
